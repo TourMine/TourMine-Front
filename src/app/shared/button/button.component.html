@@ -1,0 +1,10 @@
+<button 
+  [ngClass]="[
+    'py-2 px-4 rounded-lg font-medium focus:outline-none transition-all duration-300',
+    variant === 'primary' ? 'bg-[#FF6500] text-white hover:bg-[#ff5900]' : '',
+    variant === 'secondary' ? 'bg-gray-300 text-black hover:bg-gray-400' : '',
+    disabled ? 'opacity-50' : ''
+  ]"
+  [disabled]="disabled">
+  <ng-content></ng-content>
+</button>

@@ -1,0 +1,33 @@
+<app-card-main>
+    <div class="flex justify-around items-center mb-2">
+        <div>
+            <h1 class="uppercase text-4xl font-bold">Criar Torneio</h1>
+        </div>
+        <img class="bg-[#FF6500] px-10 py-2 teste" src="https://pngimg.com/d/call_of_duty_PNG24.png" alt="">
+    </div>
+
+    <div class="flex flex-col justify-center gap-4 p-5">
+        <div class="flex justify-center gap-4">
+            <app-input
+                class="w-1/2"
+                [label]="'Nome'"
+                [placeholder]="'Digite o nome do torneio'"
+            ></app-input>
+    
+            <app-input
+                class="w-1/2"
+                [label]="'TAG'"
+                [placeholder]="'Digite a TAG do torneio'"
+                [error]="'error aqui'"
+            ></app-input>
+        </div>
+
+        <app-dropdown 
+          label="Selecione o Jogo" 
+          [options]="[{ label: 'CS:GO', value: 'csgo' }, { label: 'Valorant', value: 'valorant' }]">
+        </app-dropdown>
+    
+        <app-button class="flex justify-end mt-5" [variant]="'primary'">Criar</app-button>
+    </div>
+      
+</app-card-main>
