@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, input, output } from '@angular/core';
+import { Component, EventEmitter, Input, input, Output, output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -12,8 +12,12 @@ import { RouterModule } from '@angular/router';
   styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
-  isLeftSidebarCollapsed = input.required<boolean>();
-  changeIsLeftSidebarCollapsed = output<boolean>();
+  // Controle do colapso da sidebar
+  isCollapsed = false;
+
+  @Input() isLeftSidebarCollapsed: boolean = false;  // Recebe o estado do componente pai
+  @Output() changeIsLeftSidebarCollapsed = new EventEmitter<boolean>();  // Emite mudanças para o componente pai
+
   items = [
     {
       routeLink: 'tournaments',
@@ -27,11 +31,14 @@ export class SidebarComponent {
     },
   ];
 
+  // Alterna o estado de colapso da sidebar
   toggleCollapse(): void {
-    this.changeIsLeftSidebarCollapsed.emit(!this.isLeftSidebarCollapsed());
+    this.isCollapsed = !this.isCollapsed;  // Alterna entre true/false
+    this.changeIsLeftSidebarCollapsed.emit(this.isCollapsed);  // Emite o novo estado
   }
 
   closeSidenav(): void {
-    this.changeIsLeftSidebarCollapsed.emit(true);
+    this.isCollapsed = true;
+    this.changeIsLeftSidebarCollapsed.emit(true);  // Emite o estado fechado
   }
 }
