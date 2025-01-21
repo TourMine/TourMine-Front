@@ -2,12 +2,15 @@ import { Component, HostListener, OnInit, signal } from '@angular/core';
 
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { MainComponent } from './main/main.component';
+import { HeaderComponent } from './header/header.component';
 
 @Component({
   selector: 'app-root',
   imports: [ 
-    SidebarComponent, 
-    MainComponent],
+    SidebarComponent,
+    HeaderComponent, 
+    MainComponent
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
