@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CardMainComponent } from '../../shared/card-main/card-main.component';
+import { CardMainComponent } from '../../../../shared/components/card-main/card-main.component';
 
 @Component({
   selector: 'app-list-tournaments',

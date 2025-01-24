@@ -1,8 +1,8 @@
 import { Component, HostListener, OnInit, signal } from '@angular/core';
 
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { MainComponent } from './main/main.component';
-import { HeaderComponent } from './header/header.component';
+import { SidebarComponent } from './layouts/sidebar/sidebar.component';
+import { MainComponent } from './layouts/main/main.component';
+import { HeaderComponent } from './layouts/header/header.component';
 
 @Component({
   selector: 'app-root',

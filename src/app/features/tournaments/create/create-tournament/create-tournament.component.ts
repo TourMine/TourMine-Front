@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { ButtonComponent } from '../../shared/button/button.component';
-import { InputComponent } from '../../shared/input/input.component';
-import { CardMainComponent } from '../../shared/card-main/card-main.component';
-import { DropdownComponent } from '../../shared/dropdown/dropdown.component';
+import { ButtonComponent } from '../../../../shared/components/button/button.component';
+import { InputComponent } from '../../../../shared/components/input/input.component';
+import { CardMainComponent } from '../../../../shared/components/card-main/card-main.component';
+import { DropdownComponent } from '../../../../shared/components/dropdown/dropdown.component';
 
 @Component({
   selector: 'app-create-tournament',
