@@ -1,0 +1,15 @@
+<mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-card-title class="text-lg lg:text-xl font-bold text-orange-400">{{ title }}</mat-card-title>
+      <mat-card-subtitle class="text-base md:text-lg lg:text-lg font-semibold text-blue-600">{{ subtitle }}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+    <mat-card-content>
+      <p class="text-sm md:text-base text-gray-300">{{ description }}</p>
+    </mat-card-content>
+    <mat-card-actions class="flex justify-around">
+        <app-button class="text-xs" [variant]="'primary'">Teste 1</app-button>
+        <app-button class="text-xs" [variant]="'secondary'">Teste 2</app-button>
+    </mat-card-actions>
+</mat-card>
+  
