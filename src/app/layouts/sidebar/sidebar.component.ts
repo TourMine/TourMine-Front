@@ -29,6 +29,11 @@ export class SidebarComponent {
       icon: 'fa-solid fa-trophy',
       label: 'Criar Torneio',
     },
+    {
+      routeLink: 'tournaments/update',
+      icon: 'fa-solid fa-trophy',
+      label: 'Atualizar Torneio',
+    },
   ];
 
   // Alterna o estado de colapso da sidebar
