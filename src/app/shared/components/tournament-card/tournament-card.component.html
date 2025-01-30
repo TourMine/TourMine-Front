@@ -1,15 +1,15 @@
-<mat-card appearance="outlined">
+<mat-card appearance="outlined" class="max-w-xs shadow-md">
+  <img mat-card-image class="" src="https://alppetro.co.id/dist/assets/images/default.jpg" alt="">
     <mat-card-header>
-      <mat-card-title class="text-lg lg:text-xl font-bold text-orange-400">{{ title }}</mat-card-title>
+      <mat-card-title class="text-lg lg:text-xl font-bold">{{ title }}</mat-card-title>
       <mat-card-subtitle class="text-base md:text-lg lg:text-lg font-semibold text-blue-600">{{ subtitle }}</mat-card-subtitle>
     </mat-card-header>
-    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-    <mat-card-content>
+    <mat-card-content class="mt-2 mb-2">
       <p class="text-sm md:text-base text-gray-300">{{ description }}</p>
     </mat-card-content>
     <mat-card-actions class="flex justify-around">
-        <app-button class="text-xs" [variant]="'primary'">Teste 1</app-button>
-        <app-button class="text-xs" [variant]="'secondary'">Teste 2</app-button>
+        <app-button class="text-xs md:text-base" [variant]="'primary'">Teste 1</app-button>
+        <app-button class="text-xs md:text-base" [variant]="'secondary'">Teste 2</app-button>
     </mat-card-actions>
 </mat-card>
   
