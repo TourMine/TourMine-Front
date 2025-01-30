@@ -1,53 +1,15 @@
 <app-card-main>
-    <div class="flex justify-center items-center mt-4 mb-10">
-        <h1 class="uppercase text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl mt-5 font-bold">Torneios</h1>
+    <div class="flex justify-center items-center mb-10 py-10">
+        <h1 class="uppercase text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold">Torneios</h1>
     </div>
 
-    <div class="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 items-center justify-center gap-5 p-5">
-
-        <app-tournament-card
-            title="Title"
-            subtitle="subtitle"
-            description="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Distinctio saepe a praesentium aperiam, esse quam vero eligendi pariatur molestias magnam accusamus quisquam enim. Dignissimos voluptates non ex corporis aliquam consequuntur!"
-        ></app-tournament-card>
-
-        <app-tournament-card
-            title="Title"
-            subtitle="subtitle"
-            description="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Distinctio saepe a praesentium aperiam, esse quam vero eligendi pariatur molestias magnam accusamus quisquam enim. Dignissimos voluptates non ex corporis aliquam consequuntur!"
-        ></app-tournament-card>
-
-        <app-tournament-card
-            title="Title"
-            subtitle="subtitle"
-            description="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Distinctio saepe a praesentium aperiam, esse quam vero eligendi pariatur molestias magnam accusamus quisquam enim. Dignissimos voluptates non ex corporis aliquam consequuntur!"
-        ></app-tournament-card>
-
-        <app-tournament-card
-            title="Title"
-            subtitle="subtitle"
-            description="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Distinctio saepe a praesentium aperiam, esse quam vero eligendi pariatur molestias magnam accusamus quisquam enim. Dignissimos voluptates non ex corporis aliquam consequuntur!"
-        ></app-tournament-card>
-
-        <app-tournament-card
-            title="Title"
-            subtitle="subtitle"
-            description="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Distinctio saepe a praesentium aperiam, esse quam vero eligendi pariatur molestias magnam accusamus quisquam enim. Dignissimos voluptates non ex corporis aliquam consequuntur!"
-        ></app-tournament-card>
-
-        <app-tournament-card
-            title="Title"
-            subtitle="subtitle"
-            description="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Distinctio saepe a praesentium aperiam, esse quam vero eligendi pariatur molestias magnam accusamus quisquam enim. Dignissimos voluptates non ex corporis aliquam consequuntur!"
-        ></app-tournament-card>
-
-        <app-tournament-card
-            title="Title"
-            subtitle="subtitle"
-            description="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Distinctio saepe a praesentium aperiam, esse quam vero eligendi pariatur molestias magnam accusamus quisquam enim. Dignissimos voluptates non ex corporis aliquam consequuntur!"
-        ></app-tournament-card>
-
+    <div class="flex flex-wrap justify-center items-center py-5 gap-5">
+        @for (tournament of tournaments; track $index) {
+            <app-tournament-card
+                [title]="tournament.title"
+                [subtitle]="tournament.subtitle"
+                [description]="tournament.description"
+            ></app-tournament-card>
+        }
     </div>
-
-    
 </app-card-main>
