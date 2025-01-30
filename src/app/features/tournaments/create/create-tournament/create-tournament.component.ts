@@ -8,6 +8,7 @@ import { DropdownComponent } from '../../../../shared/components/dropdown/dropdo
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CreateTournamentServiceService } from '../../../../services/create/create-tournament-service.service';
 import { Tournament } from '../../../../models/tournaments';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
@@ -17,7 +18,8 @@ import { Tournament } from '../../../../models/tournaments';
     MatSelectModule, 
     ButtonComponent, 
     CardMainComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CommonModule
   ],
   templateUrl: './create-tournament.component.html',
   styleUrl: './create-tournament.component.scss'
@@ -37,6 +39,8 @@ export class CreateTournamentComponent {
     status: new FormControl(1, Validators.required),
     description: new FormControl('', Validators.required),
   });
+
+  successMessage: string = '';
 
   constructor(private createTournamentService: CreateTournamentServiceService) {}
 
@@ -61,6 +65,15 @@ export class CreateTournamentComponent {
       this.createTournamentService.createTournament(torneio).subscribe({
         next: (response) => {
           console.log('Torneio criado com sucesso!', response);
+          this.formulario.reset();
+
+          // Exibir a mensagem de sucesso
+          this.successMessage = 'Torneio criado com sucesso!';
+          
+          // Ocultar a mensagem após 5 segundos
+          setTimeout(() => {
+            this.successMessage = '';
+          }, 5000);
         },
         error: (error) => {
           console.error('Erro ao criar torneio', error);
