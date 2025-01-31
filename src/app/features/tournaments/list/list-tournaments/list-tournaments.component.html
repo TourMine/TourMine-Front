@@ -1,2 +1,66 @@
 <app-card-main>
+  <div class="flex justify-around items-center mb-2">
+    <div>
+      <h1 class="uppercase text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold py-5 md:py-10">Lista de Torneios</h1>
+    </div>
+  </div>
+
+  <!-- Campo de Busca -->
+  <div class="p-5">
+    <mat-form-field class="w-full">
+      <mat-label>Pesquisar torneios</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Digite para filtrar..." />
+    </mat-form-field>
+  </div>
+
+  <div class="p-5 overflow-x-scroll md:overflow-hidden">
+    <table mat-table [dataSource]="dataSource" matSort class="w-full overflow-x-scroll">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
+        <td mat-cell *matCellDef="let tournament"> {{ tournament.name }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="game">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Jogo </th>
+        <td mat-cell *matCellDef="let tournament"> {{ tournament.game }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="plataform">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Plataforma </th>
+        <td mat-cell *matCellDef="let tournament"> {{ tournament.plataform }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="maxTeams">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Máx. Times </th>
+        <td mat-cell *matCellDef="let tournament"> {{ tournament.maxTeams }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="startDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Data Início </th>
+        <td mat-cell *matCellDef="let tournament"> {{ tournament.startDate | date }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <td mat-cell *matCellDef="let tournament">
+          {{ tournament.status === 1 ? 'Aberto' : 'Fechado' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Ações </th>
+        <td mat-cell *matCellDef="let tournament">
+          <button mat-icon-button color="primary" class="w-full py-2 px-4 bg-orange-600 text-white font-semibold rounded-lg hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500" (click)="updateTournament(tournament.id)">
+            <p>Atualizar</p>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <!-- Paginação -->
+    <mat-paginator class="w-full" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
 </app-card-main>
