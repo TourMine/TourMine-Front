@@ -9,9 +9,10 @@ import { CardMainComponent } from '../../../../shared/components/card-main/card-
   imports: [
     CommonModule,
     CardMainComponent
+
   ],
   templateUrl: './list-tournaments.component.html',
-  styleUrl: './list-tournaments.component.scss'
+  styleUrl: './list-tournaments.component.scss',
 })
 export class ListTournamentsComponent implements OnInit {
   tournaments: any[] = [];
@@ -21,7 +22,6 @@ export class ListTournamentsComponent implements OnInit {
   ngOnInit() {
     this.listAllTournaments();
   }
-
 
   listAllTournaments() {
     this.tournamentService.getAllTournaments().subscribe({
@@ -34,4 +34,5 @@ export class ListTournamentsComponent implements OnInit {
       }
     });
   }
+
 }
