@@ -1,2 +1,32 @@
 <app-card-main>
-</app-card-main>
+    <h1 class="uppercase text-xl md:text-2xl lg:text-3xl xl:text-4xl mt-5 font-bold text-center">
+      Lista de Torneios
+    </h1>
+    
+    <div class="p-5">
+      <table class="w-full border-collapse border border-gray-300">
+        <thead>
+          <tr class="bg-gray-200">
+            <th class="border border-gray-300 p-2">Nome</th>
+            <th class="border border-gray-300 p-2">Jogo</th>
+            <th class="border border-gray-300 p-2">Plataforma</th>
+            <th class="border border-gray-300 p-2">Máx. Times</th>
+            <th class="border border-gray-300 p-2">Data Início</th>
+            <th class="border border-gray-300 p-2">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let tournament of tournaments">
+            <td class="border border-gray-300 p-2">{{ tournament.name }}</td>
+            <td class="border border-gray-300 p-2">{{ tournament.game }}</td>
+            <td class="border border-gray-300 p-2">{{ tournament.plataform }}</td>
+            <td class="border border-gray-300 p-2">{{ tournament.maxTeams }}</td>
+            <td class="border border-gray-300 p-2">{{ tournament.startDate | date }}</td>
+            <td class="border border-gray-300 p-2">
+              {{ tournament.status === 1 ? 'Aberto' : 'Fechado' }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </app-card-main>
