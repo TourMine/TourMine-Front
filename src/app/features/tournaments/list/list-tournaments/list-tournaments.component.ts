@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-tournaments',
@@ -24,13 +25,13 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
   styleUrl: './list-tournaments.component.scss',
 })
 export class ListTournamentsComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'game', 'plataform', 'maxTeams', 'startDate', 'status'];
+  displayedColumns: string[] = ['name', 'game', 'plataform', 'maxTeams', 'startDate', 'status', 'actions'];
   dataSource = new MatTableDataSource<any>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private tournamentService: TournamentServiceService) {}
+  constructor(private tournamentService: TournamentServiceService, private router: Router) {}
 
   ngOnInit() {
     this.listAllTournaments();
@@ -61,6 +62,10 @@ export class ListTournamentsComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  updateTournament(id: string) {
+    this.router.navigate(['/tournaments/update', id]);
   }
 
 }

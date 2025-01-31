@@ -48,19 +48,20 @@ export class CreateTournamentComponent {
     if (this.formulario.valid) {
       const torneio = {
         name: this.formulario.value.name,
-        game: "string",
-        plataform: 1,
-        maxTeams: 0,
-        teamsType: 1,
+        game: this.formulario.value.game,
+        plataform: Number(this.formulario.value.plataform),
+        maxTeams: Number(this.formulario.value.maxTeams),
+        teamsType: Number(this.formulario.value.teamsType),
         startDate: new Date().toISOString(),
         endDate: new Date().toISOString(),
-        prize: "string",
-        subscriptionType: 1,
-        status: 1,
-        description: "string"
+        prize: this.formulario.value.prize,
+        subscriptionType: Number(this.formulario.value.subscriptionType),
+        status: Number(this.formulario.value.status),
+        description: this.formulario.value.description
       };
   
       console.log('Enviando torneio:', torneio);
+      console.log('Valores do formulário:', this.formulario.value);
   
       this.TournamentService.createTournament(torneio).subscribe({
         next: (response) => {
