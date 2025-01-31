@@ -16,89 +16,192 @@
     <div class="flex flex-col justify-center gap-4 p-5">
         <form [formGroup]="formulario" class="flex flex-col gap-4">
             <!-- Nome -->
-            @if (formulario.get('name')?.hasError('required') && formulario.get('name')?.touched) {
-                <p>O campo Nome é obrigatório.</p>
-            }
-            <input 
-                type="text" 
-                formControlName="name" 
-                placeholder="Nome do Torneio" 
-                class="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6500] focus:border-transparent text-black"
-            >
-
+            <div>
+                <label class="block mb-1 text-base font-medium">Nome</label>
+                <input 
+                    type="text" 
+                    formControlName="name" 
+                    placeholder="Nome do Torneio" 
+                    [ngClass]="[
+                        'w-full text-white px-2 py-2 border bg-neutral-900 rounded-lg focus:outline-none focus:ring-2',
+                        formulario.get('name')?.hasError('required') && formulario.get('name')?.touched  ? 'border-red-500 focus:ring-red-500' : 'border-neutral-700 focus:ring-neutral-700'
+                    ]"
+                >
+                @if (formulario.get('name')?.hasError('required') && formulario.get('name')?.touched) {
+                    <p class="text-sm text-red-600">O campo Nome é obrigatório.</p>
+                }
+            </div>
             <!-- Jogo -->
-            @if (formulario.get('game')?.hasError('required') && formulario.get('game')?.touched) {
-                <p>O campo Jogo é obrigatório.</p>
-            }
-            <input 
+            <div>
+                <label class="block mb-1 text-base font-medium">Jogo</label>
+                <input 
                 type="text" 
                 formControlName="game" 
                 placeholder="Jogo" 
-                class="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6500] focus:border-transparent text-black"
-            >
-
+                [ngClass]="[
+                    'w-full text-white px-2 py-2 border bg-neutral-900 rounded-lg focus:outline-none focus:ring-2',
+                    formulario.get('game')?.hasError('required') && formulario.get('game')?.touched  ? 'border-red-500 focus:ring-red-500' : 'border-neutral-700 focus:ring-neutral-700'
+                ]"
+                >
+                @if (formulario.get('game')?.hasError('required') && formulario.get('game')?.touched) {
+                    <p class="text-sm text-red-600">O campo Nome é obrigatório.</p>
+                }
+            </div>
+            
             <!-- Plataforma -->
-            <select formControlName="plataform"  class="p-2 border border-gray-300 rounded-md text-black">
-                <option [value]="1">PC</option>
-                <option [value]="2">Console</option>
-                <option [value]="3">Mobile</option>
-            </select>
+            <div>
+                <label class="block mb-1 text-base font-medium">Plataforma</label>
+                <select formControlName="plataform" 
+                    [ngClass]="[
+                        'w-full text-white px-2 py-2 border bg-neutral-900 rounded-lg focus:outline-none focus:ring-2',
+                        formulario.get('plataform')?.hasError('required') && formulario.get('plataform')?.touched  ? 'border-red-500 focus:ring-red-500' : 'border-neutral-700 focus:ring-neutral-700'
+                    ]"
+                >
+                @if (formulario.get('plataform')?.hasError('plataform') && formulario.get('plataform')?.touched) {
+                    <p class="text-sm text-red-600">O campo Plataforma é obrigatório.</p>
+                }
+                    <option [value]="1">PC</option>
+                    <option [value]="2">Console</option>
+                    <option [value]="3">Mobile</option>
+                </select>
+            </div>
 
             <!-- Quantidade Máxima de Times -->
-            <input 
-                type="number" 
-                formControlName="maxTeams" 
-                placeholder="Máx. de Times" 
-                class="p-2 border border-gray-300 rounded-md text-black"
-            >
+            <div>
+                <label class="block mb-1 text-base font-medium">Quantidade Máxima de Times</label>
+                <input 
+                    type="number" 
+                    formControlName="maxTeams" 
+                    placeholder="Máx. de Times" 
+                    [ngClass]="[
+                        'w-full text-white px-2 py-2 border bg-neutral-900 rounded-lg focus:outline-none focus:ring-2',
+                        formulario.get('maxTeams')?.hasError('required') && formulario.get('maxTeams')?.touched  ? 'border-red-500 focus:ring-red-500' : 'border-neutral-700 focus:ring-neutral-700'
+                    ]"
+                >
+                @if (formulario.get('maxTeams')?.hasError('maxTeams') && formulario.get('maxTeams')?.touched) {
+                    <p class="text-sm text-red-600">O campo Quantidade Máxima de Times é obrigatório.</p>
+                }
+            </div>
 
             <!-- Tipo de Equipes -->
-            <select formControlName="teamsType" class="p-2 border border-gray-300 rounded-md text-black">
-                <option [value]="1">Solo</option>
-                <option [value]="2">Duplas</option>
-                <option [value]="3">Times</option>
-            </select>
+            <div>
+                <label class="block mb-1 text-base font-medium">Tipo de Equipe</label>
+                <select formControlName="teamsType"
+                    [ngClass]="[
+                        'w-full text-white px-2 py-2 border bg-neutral-900 rounded-lg focus:outline-none focus:ring-2',
+                        formulario.get('teamsType')?.hasError('required') && formulario.get('teamsType')?.touched  ? 'border-red-500 focus:ring-red-500' : 'border-neutral-700 focus:ring-neutral-700'
+                    ]"
+                >
+                @if (formulario.get('teamsType')?.hasError('teamsType') && formulario.get('teamsType')?.touched) {
+                    <p class="text-sm text-red-600">O campo Tipo de Equipes é obrigatório.</p>
+                }
+                    <option [value]="1">Solo</option>
+                    <option [value]="2">Duplas</option>
+                    <option [value]="3">Times</option>
+                </select>
+            </div>
 
             <!-- Data de Início -->
-            <input 
-                type="datetime-local" 
-                formControlName="startDate" 
-                class="p-2 border border-gray-300 rounded-md text-black"
-            >
-
-            <!-- Data de Término -->
-            <input 
-                type="datetime-local" 
-                formControlName="endDate" 
-                class="p-2 border border-gray-300 rounded-md text-black"
-            >
+            <div class="md:flex md:gap-2">
+                <div class="w-full">
+                    <label class="block mb-1 text-base font-medium">Data de Início</label>
+                    <input 
+                        type="datetime-local" 
+                        formControlName="startDate" 
+                        [ngClass]="[
+                            'w-full text-white px-2 py-2 border bg-neutral-900 rounded-lg focus:outline-none focus:ring-2',
+                            formulario.get('startDate')?.hasError('required') && formulario.get('startDate')?.touched  ? 'border-red-500 focus:ring-red-500' : 'border-neutral-700 focus:ring-neutral-700'
+                        ]"
+                    >
+                    @if (formulario.get('startDate')?.hasError('startDate') && formulario.get('startDate')?.touched) {
+                        <p class="text-sm text-red-600">O campo Data de Início é obrigatório.</p>
+                    }
+                </div>
+    
+                <!-- Data de Término -->
+                <div class="w-full">
+                    <label class="block mb-1 text-base font-medium">Data de Término</label>
+                    <input 
+                        type="datetime-local" 
+                        formControlName="endDate" 
+                        [ngClass]="[
+                            'w-full text-white px-2 py-2 border bg-neutral-900 rounded-lg focus:outline-none focus:ring-2',
+                            formulario.get('endDate')?.hasError('required') && formulario.get('endDate')?.touched  ? 'border-red-500 focus:ring-red-500' : 'border-neutral-700 focus:ring-neutral-700'
+                        ]"
+                    >
+                    @if (formulario.get('endDate')?.hasError('endDate') && formulario.get('endDate')?.touched) {
+                        <p class="text-sm text-red-600">O campo Data de Término é obrigatório.</p>
+                    }
+                </div>
+            </div>
 
             <!-- Prêmio -->
-            <input 
-                type="text" 
-                formControlName="prize" 
-                placeholder="Prêmio" 
-                class="p-2 border border-gray-300 rounded-md text-black"
-            >
+            <div>
+                <label class="block mb-1 text-base font-medium">Prêmio</label>
+                <input 
+                    type="text" 
+                    formControlName="prize" 
+                    placeholder="Prêmio" 
+                    [ngClass]="[
+                        'w-full text-white px-2 py-2 border bg-neutral-900 rounded-lg focus:outline-none focus:ring-2',
+                        formulario.get('prize')?.hasError('required') && formulario.get('prize')?.touched  ? 'border-red-500 focus:ring-red-500' : 'border-neutral-700 focus:ring-neutral-700'
+                    ]"
+                >
+                @if (formulario.get('prize')?.hasError('prize') && formulario.get('prize')?.touched) {
+                    <p class="text-sm text-red-600">O campo Data de Término é obrigatório.</p>
+                }
+            </div>
 
             <!-- Tipo de Inscrição -->
-            <select formControlName="subscriptionType" class="p-2 border border-gray-300 rounded-md text-black" >
-                <option [value]="1">Grátis</option>
-                <option [value]="2">Pago</option>
-            </select>
+            <div>
+                <label class="block mb-1 text-base font-medium">Tipo de Inscrição</label>
+                <select formControlName="subscriptionType"
+                    [ngClass]="[
+                        'w-full text-white px-2 py-2 border bg-neutral-900 rounded-lg focus:outline-none focus:ring-2',
+                        formulario.get('subscriptionType')?.hasError('required') && formulario.get('subscriptionType')?.touched  ? 'border-red-500 focus:ring-red-500' : 'border-neutral-700 focus:ring-neutral-700'
+                    ]"
+                >
+                @if (formulario.get('subscriptionType')?.hasError('subscriptionType') && formulario.get('subscriptionType')?.touched) {
+                    <p class="text-sm text-red-600">O campo Tipo de Inscrição é obrigatório.</p>
+                }
+                    <option [value]="1">Grátis</option>
+                    <option [value]="2">Pago</option>
+                </select>
+            </div>
 
             <!-- Status -->
-            <select formControlName="status" class="p-2 border border-gray-300 rounded-md text-black">
-                <option [value]="1">Aberto</option>
-                <option [value]="2">Fechado</option>
-            </select>
+            <div>
+                <label class="block mb-1 text-base font-medium">Status</label>
+                <select formControlName="status"
+                    [ngClass]="[
+                        'w-full text-white px-2 py-2 border bg-neutral-900 rounded-lg focus:outline-none focus:ring-2',
+                        formulario.get('status')?.hasError('required') && formulario.get('status')?.touched  ? 'border-red-500 focus:ring-red-500' : 'border-neutral-700 focus:ring-neutral-700'
+                    ]"
+                >
+                @if (formulario.get('status')?.hasError('status') && formulario.get('status')?.touched) {
+                    <p class="text-sm text-red-600">O campo Status é obrigatório.</p>
+                }
+                    <option [value]="1">Aberto</option>
+                    <option [value]="2">Fechado</option>
+                </select>
+            </div>
 
             <!-- Descrição -->
-            <textarea 
-                formControlName="description" 
-                placeholder="Descrição do Torneio" 
-                class="p-2 border border-gray-300 rounded-md text-black"
-            ></textarea>
+            <div>
+                <label class="block mb-1 text-base font-medium">Descrição</label>
+                <textarea 
+                    formControlName="description" 
+                    placeholder="Descrição do Torneio" 
+                    [ngClass]="[
+                        'w-full text-white px-2 py-2 border bg-neutral-900 rounded-lg focus:outline-none focus:ring-2',
+                        formulario.get('description')?.hasError('required') && formulario.get('description')?.touched  ? 'border-red-500 focus:ring-red-500' : 'border-neutral-700 focus:ring-neutral-700'
+                    ]"
+                >
+                @if (formulario.get('description')?.hasError('description') && formulario.get('description')?.touched) {
+                    <p class="text-sm text-red-600">O campo Descrição é obrigatório.</p>
+                }
+            </textarea>
+            </div>
         </form>
 
         <app-button class="flex justify-end mt-5" [variant]="'primary'" [disabled]="formulario.invalid" (click)="criarTorneio()">

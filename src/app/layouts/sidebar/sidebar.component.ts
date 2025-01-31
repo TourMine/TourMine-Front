@@ -27,6 +27,7 @@ export class SidebarComponent {
     {
       routeLink: 'tournaments/create',
       icon: 'fa-solid fa-trophy',
+      icon_add: 'fa-solid fa-plus',
       label: 'Criar Torneio',
     },
     {
