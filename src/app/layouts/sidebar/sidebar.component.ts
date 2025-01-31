@@ -22,7 +22,7 @@ export class SidebarComponent {
     {
       routeLink: 'tournaments',
       icon: 'fa-solid fa-gamepad',
-      label: 'Torneios',
+      label: 'Dashboard',
     },
     {
       routeLink: 'tournaments/create',
@@ -30,9 +30,9 @@ export class SidebarComponent {
       label: 'Criar Torneio',
     },
     {
-      routeLink: 'tournaments/update',
+      routeLink: 'tournaments/list',
       icon: 'fa-solid fa-trophy',
-      label: 'Atualizar Torneio',
+      label: 'Torneios',
     },
   ];
 

@@ -6,7 +6,7 @@ import { InputComponent } from '../../../../shared/components/input/input.compon
 import { CardMainComponent } from '../../../../shared/components/card-main/card-main.component';
 import { DropdownComponent } from '../../../../shared/components/dropdown/dropdown.component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CreateTournamentServiceService } from '../../../../services/create/create-tournament-service.service';
+import { TournamentServiceService } from '../../../../services/tournament/tournament-service.service';
 import { Tournament } from '../../../../models/tournaments';
 import { CommonModule } from '@angular/common';
 
@@ -42,7 +42,7 @@ export class CreateTournamentComponent {
 
   successMessage: string = '';
 
-  constructor(private createTournamentService: CreateTournamentServiceService) {}
+  constructor(private TournamentService: TournamentServiceService) {}
 
   criarTorneio() {
     if (this.formulario.valid) {
@@ -62,7 +62,7 @@ export class CreateTournamentComponent {
   
       console.log('Enviando torneio:', torneio);
   
-      this.createTournamentService.createTournament(torneio).subscribe({
+      this.TournamentService.createTournament(torneio).subscribe({
         next: (response) => {
           console.log('Torneio criado com sucesso!', response);
           this.formulario.reset();

@@ -1,15 +1,32 @@
 <app-card-main>
-    <div class="flex justify-center items-center mb-10 py-10">
-        <h1 class="uppercase text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold">Torneios</h1>
+    <h1 class="uppercase text-xl md:text-2xl lg:text-3xl xl:text-4xl mt-5 font-bold text-center">
+      Lista de Torneios
+    </h1>
+    
+    <div class="p-5">
+      <table class="w-full border-collapse border border-gray-300">
+        <thead>
+          <tr class="bg-gray-200">
+            <th class="border border-gray-300 p-2">Nome</th>
+            <th class="border border-gray-300 p-2">Jogo</th>
+            <th class="border border-gray-300 p-2">Plataforma</th>
+            <th class="border border-gray-300 p-2">Máx. Times</th>
+            <th class="border border-gray-300 p-2">Data Início</th>
+            <th class="border border-gray-300 p-2">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let tournament of tournaments">
+            <td class="border border-gray-300 p-2">{{ tournament.name }}</td>
+            <td class="border border-gray-300 p-2">{{ tournament.game }}</td>
+            <td class="border border-gray-300 p-2">{{ tournament.plataform }}</td>
+            <td class="border border-gray-300 p-2">{{ tournament.maxTeams }}</td>
+            <td class="border border-gray-300 p-2">{{ tournament.startDate | date }}</td>
+            <td class="border border-gray-300 p-2">
+              {{ tournament.status === 1 ? 'Aberto' : 'Fechado' }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-
-    <div class="flex flex-wrap justify-center items-center py-5 gap-5">
-        @for (tournament of tournaments; track $index) {
-            <app-tournament-card
-                [title]="tournament.title"
-                [subtitle]="tournament.subtitle"
-                [description]="tournament.description"
-            ></app-tournament-card>
-        }
-    </div>
-</app-card-main>
+  </app-card-main>
