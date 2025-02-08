@@ -7,7 +7,7 @@ import { Router, RouterModule } from '@angular/router';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-signup',
   imports: [
     InputTextModule,
     PasswordModule,
@@ -16,29 +16,30 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     RouterModule
   ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  templateUrl: './signup.component.html',
+  styleUrl: './signup.component.scss'
 })
-export class LoginComponent {
-  loginForm: FormGroup;
+export class SignupComponent {
+  signupForm: FormGroup;
+  username!: string;
   email!: string;
   password!: string;
 
   constructor(private fb: FormBuilder, private router: Router) {
-    this.loginForm = this.fb.group({
+    this.signupForm = this.fb.group({
+      username: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
-  login(): void {
-    if (this.loginForm.valid) {
+  signup(): void {
+    if (this.signupForm.valid) {
       this.router.navigate(['/tournaments/list']);
     }
   }
 
   isFieldInvalid(field: string): boolean {
-    return this.loginForm.controls[field].invalid && this.loginForm.controls[field].touched;
+    return this.signupForm.controls[field].invalid && this.signupForm.controls[field].touched;
   }
-
 }
