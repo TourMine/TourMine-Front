@@ -14,9 +14,17 @@ html {
   ));
 }
 
+@layer tailwind-base, primeng, tailwind-utilities;
+
+@layer tailwind-base {
 @tailwind base;
+}
+
+@layer tailwind-utilities {
 @tailwind components;
 @tailwind utilities;
+}
+
 
 html, body { height: 100%; }
 body { 
@@ -26,5 +34,5 @@ body {
     color: white;
 }
 
-$primary-color: #FF6500;
+$primary-color: #f97316;
 $secondary-color: #171717;

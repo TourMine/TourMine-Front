@@ -1,0 +1,39 @@
+<div class="h-screen flex">
+  
+    <div class="w-full lg:w-2/5 flex justify-center items-center">
+      <form [formGroup]="loginForm" (ngSubmit)="login()"  class="flex flex-col gap-5 p-8 w-3/4 max-w-md shadow-lg rounded-lg">
+        <h2 class="text-3xl font-medium text-center">Login</h2>
+  
+        <div class="flex flex-col gap-2">
+          <label for="email">Email</label>
+          <input pInputText formControlName="email" type="email" id="email" name="email" />
+          @if (isFieldInvalid("email")) {
+            <small class="text-red-500">
+                O email é obrigatório e deve ser um email válido.
+            </small>
+          }
+        </div>
+  
+        <div class="flex flex-col gap-2">
+          <label for="password">Senha</label>
+          <p-password formControlName="password" id="password" name="password" [toggleMask]="true"></p-password>
+          @if (isFieldInvalid("password")) {
+            <small class="text-red-500">
+                A senha é obrigatória e deve ter pelo menos 6 caracteres.
+            </small>
+          }
+        </div>
+  
+        <div>
+          <p-button 
+            label="Entrar"
+            [disabled]="loginForm.invalid"
+          />
+        </div>
+      </form>
+    </div>
+
+    <div class="hidden lg:block w-3/5 bg-primary bg-cover bg-center">
+    </div>
+
+  </div>
