@@ -36,10 +36,28 @@
                 </small>
             }
         </div>
+
+        <div class="flex flex-wrap gap-4 mb-2">
+          <div class="flex items-center">
+              <p-radiobutton name="userType" formControlName="userType" value="participant" [(ngModel)]="userType" inputId="participant" />
+              <label for="participant" class="ml-2">Participante</label>
+          </div>
+  
+          <div class="flex items-center">
+              <p-radiobutton name="userType" formControlName="userType" value="organizer" [(ngModel)]="userType" inputId="organizer" />
+              <label for="organizer" class="ml-2">Organizador</label>
+          </div>
+          @if (isFieldInvalid("userType")) {
+            <small class="text-red-500">
+                É necessário informar o tipo de usuário.
+            </small>
+        }
+        </div>
   
         <div>
           <p-button 
             label="Cadastrar"
+            type="submit"
             [disabled]="signupForm.invalid"
           />
         </div>

@@ -4,6 +4,7 @@ import { PasswordModule } from 'primeng/password';
 import { FormBuilder, FormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { Router, RouterModule } from '@angular/router';
+import { RadioButton } from 'primeng/radiobutton';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -14,7 +15,8 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ButtonModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule, 
+    RadioButton
   ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss'
@@ -24,12 +26,14 @@ export class SignupComponent {
   username!: string;
   email!: string;
   password!: string;
+  userType!: string;
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.signupForm = this.fb.group({
       username: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
+      userType: ['', [Validators.required]]
     });
   }
 
