@@ -13,7 +13,7 @@
   </div>
   
   <div class="flex flex-wrap gap-4 justify-center items-center p-5 pb-10">
-    @for (tournament of filteredTournaments; track $index) {  <app-tournament-card 
+    @for (tournament of paginatedTournaments; track $index) {  <app-tournament-card 
         [name]="tournament.name"
         [game]="tournament.game"
         [platform]="tournament.platform"
@@ -28,5 +28,7 @@
       <h2 class="text-xl text-center">Não há torneios correspondentes à sua pesquisa!</h2>
     }
   </div>
+
+  <p-paginator [rows]="rows" [totalRecords]="filteredTournaments.length" (onPageChange)="paginate($event)"></p-paginator>
 
 </app-card-main>

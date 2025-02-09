@@ -1,3 +1,7 @@
 :host ::ng-deep .pi-search {
     @apply text-white
 }
+
+:host ::ng-deep .p-paginator {
+    @apply bg-transparent pb-10
+}

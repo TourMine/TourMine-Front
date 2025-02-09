@@ -1,3 +1,15 @@
 .teste {
     clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
 }
+
+:host ::ng-deep .p-datepicker{
+    @apply w-full;
+}
+
+:host ::ng-deep .p-select {
+    @apply w-full;
+}
+
+:host ::ng-deep .p-inputtext {
+    @apply w-full;
+}
