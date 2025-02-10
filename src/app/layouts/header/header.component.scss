@@ -1,0 +1,11 @@
+:host ::ng-deep .p-button {
+    @apply bg-transparent border-none mr-5 px-6
+}
+
+:host ::ng-deep .p-button .pi-user {
+    @apply px-3 py-1.5 bg-white text-black text-lg rounded-3xl border shadow-md opacity-80
+}
+
+:host ::ng-deep .p-button .pi-user:hover {
+    @apply opacity-100
+}
