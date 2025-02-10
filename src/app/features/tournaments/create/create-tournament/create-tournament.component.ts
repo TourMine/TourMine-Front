@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { CardMainComponent } from '../../../../shared/components/card-main/card-main.component';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TournamentServiceService } from '../../../../services/tournament/tournament-service.service';
-import { Tournament } from '../../../../models/tournaments';
+import { Tournament } from '../../../../models/tournament/tournaments';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -13,6 +12,12 @@ import { SelectModule } from 'primeng/select';
 import { ButtonModule } from 'primeng/button';
 import { DatePicker } from 'primeng/datepicker';
 import { TextareaModule } from 'primeng/textarea';
+import { EParticipantsType, PARTICIPANTS_TYPE_LABELS } from '../../../../models/tournament/enums/participants-type.enum';
+import { EPlataforms, PLATAFORMS_LABELS } from '../../../../models/tournament/enums/plataforms.enum';
+import { ESubscriptionType, SUBSCRIPTION_TYPE_LABELS } from '../../../../models/tournament/enums/subscription-type.enum';
+import { ETournamentStatus, TOURNAMENT_STATUS_LABELS } from '../../../../models/tournament/enums/tournament-status.enum';
+import { EGames, GAME_LABELS } from '../../../../models/tournament/enums/games.enum';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -20,7 +25,6 @@ import { TextareaModule } from 'primeng/textarea';
   imports: [
     MatFormFieldModule, 
     MatSelectModule, 
-    ButtonComponent, 
     CardMainComponent,
     ReactiveFormsModule,
     CommonModule,
@@ -36,32 +40,40 @@ import { TextareaModule } from 'primeng/textarea';
   styleUrl: './create-tournament.component.scss'
 })
 export class CreateTournamentComponent {
-  gameOptions = [
-    { label: 'FIFA', value: 'FIFA' },
-    { label: 'CS:GO 2', value: 'CS:GO 2' },
-    { label: 'League of Legends', value: 'League of Legends' },
-    { label: 'Valorant', value: 'Valorant' },
-    { label: 'Fortnite', value: 'Fortnite' },
-    { label: 'Outro', value: 'Outro' }
-  ];
-  plataformOptions = [
-    { label: 'PC', value: 1 },
-    { label: 'Console', value: 2 },
-    { label: 'Mobile', value: 3 }
-  ];
-  teamsTypeOptions = [
-    { label: 'Solo', value: 1 },
-    { label: 'Duplas', value: 2 },
-    { label: 'Times', value: 3 }
-  ];
-  subscriptionTypeOptions = [
-    { label: 'Grátis', value: 1 },
-    { label: 'Pago', value: 2 },
-  ];
-  statusOptions = [
-    { label: 'Aberto', value: 1 },
-    { label: 'Fechado', value: 2 }
-  ]
+
+  participantsTypeOptions = Object.keys(EParticipantsType)
+    .filter(key => !isNaN(Number(EParticipantsType[key as keyof typeof EParticipantsType])))
+    .map(key => {
+      const value = Number(EParticipantsType[key as keyof typeof EParticipantsType]);
+      return { label: PARTICIPANTS_TYPE_LABELS[value as EParticipantsType], value };
+  });
+
+  platformsOptions = Object.keys(EPlataforms)
+    .filter(key => !isNaN(Number(EPlataforms[key as keyof typeof EPlataforms])))
+    .map(key => {
+      const value = Number(EPlataforms[key as keyof typeof EPlataforms]);
+      return { label: PLATAFORMS_LABELS[value as EPlataforms], value };
+  });
+
+  subscriptionTypesOptions = Object.keys(ESubscriptionType)
+    .filter(key => !isNaN(Number(ESubscriptionType[key as keyof typeof ESubscriptionType])))
+    .map(key => {
+      const value = Number(ESubscriptionType[key as keyof typeof ESubscriptionType]);
+      return { label: SUBSCRIPTION_TYPE_LABELS[value as ESubscriptionType], value };
+  });
+
+  tournamentStatusesOptions = Object.keys(ETournamentStatus)
+    .filter(key => !isNaN(Number(ETournamentStatus[key as keyof typeof ETournamentStatus])))
+    .map(key => {
+      const value = Number(ETournamentStatus[key as keyof typeof ETournamentStatus]);
+      return { label: TOURNAMENT_STATUS_LABELS[value as ETournamentStatus], value };
+  });
+
+  gamesOptions = Object.values(EGames)
+    .map(game => ({
+      label: GAME_LABELS[game],
+      value: game
+    }))
 
   createTournamentForm = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -73,13 +85,14 @@ export class CreateTournamentComponent {
     endDate: new FormControl('', Validators.required),
     prize: new FormControl('', Validators.required),
     subscriptionType: new FormControl(1, Validators.required),
-    status: new FormControl(1, Validators.required),
     description: new FormControl('', Validators.required),
   });
 
   successMessage: string = '';
 
-  constructor(private TournamentService: TournamentServiceService) {}
+  constructor(private TournamentService: TournamentServiceService, private router: Router) {
+    console.log(this.gamesOptions)
+  }
 
   criarTorneio() {
     if (this.createTournamentForm.valid) {
@@ -93,7 +106,7 @@ export class CreateTournamentComponent {
         endDate: new Date().toISOString(),
         prize: this.createTournamentForm.value.prize,
         subscriptionType: Number(this.createTournamentForm.value.subscriptionType),
-        status: Number(this.createTournamentForm.value.status),
+        status: 1,
         description: this.createTournamentForm.value.description
       };
   
@@ -107,11 +120,14 @@ export class CreateTournamentComponent {
 
           // Exibir a mensagem de sucesso
           this.successMessage = 'Torneio criado com sucesso!';
+
           
           // Ocultar a mensagem após 5 segundos
           setTimeout(() => {
             this.successMessage = '';
-          }, 5000);
+            this.router.navigate(['/tournaments/list']);
+          }, 2000);
+          
         },
         error: (error) => {
           console.error('Erro ao criar torneio', error);

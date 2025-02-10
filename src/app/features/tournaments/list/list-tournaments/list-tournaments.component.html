@@ -13,10 +13,11 @@
   </div>
   
   <div class="flex flex-wrap gap-4 justify-center items-center p-5 pb-10">
-    @for (tournament of paginatedTournaments; track $index) {  <app-tournament-card 
+    @for (tournament of paginatedTournaments; track $index) {  
+      <app-tournament-card 
         [name]="tournament.name"
         [game]="tournament.game"
-        [platform]="tournament.platform"
+        [plataform]="tournament.plataform"
         [maxTeams]="tournament.maxTeams"
         [startDate]="tournament.startDate"
         [status]="tournament.status"

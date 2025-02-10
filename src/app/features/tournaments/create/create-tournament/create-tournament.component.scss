@@ -13,3 +13,7 @@
 :host ::ng-deep .p-inputtext {
     @apply w-full;
 }
+
+:host ::ng-deep .btn-submit {
+    @apply flex justify-end mt-5;
+}
