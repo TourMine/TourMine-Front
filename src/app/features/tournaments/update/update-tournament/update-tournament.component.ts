@@ -42,7 +42,7 @@ export class UpdateTournamentComponent implements OnInit {
     this.tournamentService.updateTournament(this.tournamentData.id, this.tournamentData).subscribe(
       () => {
         console.log('Torneio atualizado com sucesso!');
-        this.router.navigate(['/tournaments']);
+        this.router.navigate(['/tournaments/list']);
       },
       (error) => {
         console.error('Erro ao atualizar torneio:', error);

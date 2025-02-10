@@ -7,10 +7,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#FF6500',
+        primary: '#f97316',
         secondary: '#171717',
       }
     },
   },
-  plugins: [],
+  plugins: [require('tailwindcss-primeui')]
 }
