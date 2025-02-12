@@ -6,7 +6,16 @@
   
         <div class="flex flex-col gap-2">
           <label for="email">Email</label>
-          <input pInputText formControlName="email" type="email" id="email" name="email" />
+          <input 
+            pInputText 
+            formControlName="email" 
+            type="email" 
+            id="email" 
+            name="email"
+            [ngClass]="[
+              loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched  ? 'ng-invalid ng-dirty' : ''
+            ]"
+          />
           @if (isFieldInvalid("email")) {
             <small class="text-red-500">
                 O email é obrigatório e deve ser um email válido.
@@ -16,7 +25,15 @@
   
         <div class="flex flex-col gap-2">
           <label for="password">Senha</label>
-          <p-password formControlName="password" id="password" name="password" [toggleMask]="true"></p-password>
+          <p-password 
+            formControlName="password" 
+            id="password" 
+            name="password" 
+            [toggleMask]="true"
+            [ngClass]="[
+              loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched  ? 'ng-invalid ng-dirty' : ''
+            ]"
+          ></p-password>
           @if (isFieldInvalid("password")) {
             <small class="text-red-500">
                 A senha é obrigatória e deve ter pelo menos 6 caracteres.

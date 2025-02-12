@@ -40,6 +40,8 @@ import { Router } from '@angular/router';
   styleUrl: './create-tournament.component.scss'
 })
 export class CreateTournamentComponent {
+  minStartDate: Date = new Date();
+  minEndDate: Date = new Date();
 
   participantsTypeOptions = Object.keys(EParticipantsType)
     .filter(key => !isNaN(Number(EParticipantsType[key as keyof typeof EParticipantsType])))
@@ -76,38 +78,43 @@ export class CreateTournamentComponent {
     }))
 
   createTournamentForm = new FormGroup({
-    name: new FormControl('', Validators.required),
-    game: new FormControl('', Validators.required),
-    plataform: new FormControl(1, Validators.required),
-    maxTeams: new FormControl(0, [Validators.required, Validators.min(2)]),
-    teamsType: new FormControl(1, Validators.required),
-    startDate: new FormControl('', Validators.required),
-    endDate: new FormControl('', Validators.required),
-    prize: new FormControl('', Validators.required),
-    subscriptionType: new FormControl(1, Validators.required),
-    description: new FormControl('', Validators.required),
+    name: new FormControl(null, Validators.required),
+    game: new FormControl(null, Validators.required),
+    plataform: new FormControl(null, Validators.required),
+    maxTeams: new FormControl(2, [Validators.required, Validators.min(2)]),
+    teamsType: new FormControl(null, Validators.required),
+    startDate: new FormControl(null, Validators.required),
+    endDate: new FormControl(null, Validators.required),
+    prize: new FormControl(null, Validators.required),
+    subscriptionType: new FormControl(null, Validators.required),
+    description: new FormControl(null, Validators.required),
   });
 
   successMessage: string = '';
 
   constructor(private TournamentService: TournamentServiceService, private router: Router) {
-    console.log(this.gamesOptions)
+    this.createTournamentForm.get('startDate')?.valueChanges.subscribe((startDate) => {
+      if (startDate) {
+        this.minEndDate = new Date(startDate);
+        this.minEndDate.setDate(this.minEndDate.getDate() + 1);
+      }
+    });
   }
 
   criarTorneio() {
     if (this.createTournamentForm.valid) {
-      const torneio = {
-        name: this.createTournamentForm.value.name,
-        game: this.createTournamentForm.value.game,
+      const torneio: Tournament = {
+        name: this.createTournamentForm.value.name!,
+        game: this.createTournamentForm.value.game!,
         plataform: Number(this.createTournamentForm.value.plataform),
         maxTeams: Number(this.createTournamentForm.value.maxTeams),
         teamsType: Number(this.createTournamentForm.value.teamsType),
-        startDate: new Date().toISOString(),
-        endDate: new Date().toISOString(),
-        prize: this.createTournamentForm.value.prize,
+        startDate: new Date(this.createTournamentForm.value.startDate!).toISOString(),
+        endDate: new Date(this.createTournamentForm.value.endDate!).toISOString(),
+        prize: this.createTournamentForm.value.prize!,
         subscriptionType: Number(this.createTournamentForm.value.subscriptionType),
         status: 1,
-        description: this.createTournamentForm.value.description
+        description: this.createTournamentForm.value.description!
       };
   
       console.log('Enviando torneio:', torneio);
@@ -118,11 +125,8 @@ export class CreateTournamentComponent {
           console.log('Torneio criado com sucesso!', response);
           this.createTournamentForm.reset();
 
-          // Exibir a mensagem de sucesso
           this.successMessage = 'Torneio criado com sucesso!';
 
-          
-          // Ocultar a mensagem após 5 segundos
           setTimeout(() => {
             this.successMessage = '';
             this.router.navigate(['/tournaments/list']);
