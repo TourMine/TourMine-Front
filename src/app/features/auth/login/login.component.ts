@@ -5,10 +5,12 @@ import { FormBuilder, FormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { Router, RouterModule } from '@angular/router';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   imports: [
+    CommonModule,
     InputTextModule,
     PasswordModule,
     FormsModule,

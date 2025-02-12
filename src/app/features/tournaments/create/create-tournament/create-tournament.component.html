@@ -7,11 +7,10 @@
              src="https://pngimg.com/d/call_of_duty_PNG24.png" 
              alt="Imagem do jogo">
     </div>
-
-      <!-- Mensagem de sucesso -->
-  <div *ngIf="successMessage" class="fixed top-4 right-4 bg-green-500 text-white p-3 rounded-md shadow-lg">
-    {{ successMessage }}
-  </div>
+    
+    <div *ngIf="successMessage" class="fixed top-4 right-4 bg-green-500 text-white p-3 rounded-md shadow-lg">
+        {{ successMessage }}
+    </div>
 
     <div class="flex flex-col justify-center gap-4 p-5">
         <form [formGroup]="createTournamentForm" class="flex flex-col gap-4">
@@ -132,6 +131,7 @@
                         formControlName="startDate"  
                         [showTime]="true" 
                         [hourFormat]="'24'" 
+                        [minDate]="minStartDate"
                         placeholder="Selecione a data e hora de início" 
                         id="startDate" 
                         name="startDate"
@@ -155,7 +155,8 @@
                         inputId="calendar-24h" 
                         formControlName="endDate"  
                         [showTime]="true" 
-                        [hourFormat]="'24'" 
+                        [hourFormat]="'24'"
+                        [minDate]="minEndDate" 
                         placeholder="Selecione a data e hora de termíno" 
                         id="endDate" 
                         name="endDate"

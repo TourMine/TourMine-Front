@@ -6,10 +6,12 @@ import { ButtonModule } from 'primeng/button';
 import { Router, RouterModule } from '@angular/router';
 import { RadioButton } from 'primeng/radiobutton';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-signup',
   imports: [
+    CommonModule,
     InputTextModule,
     PasswordModule,
     FormsModule,
