@@ -8,6 +8,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputIcon } from 'primeng/inputicon';
 import { IconField } from 'primeng/iconfield';
 import { PaginatorModule } from 'primeng/paginator';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { waitForAsync } from '@angular/core/testing';
 
 @Component({
   selector: 'app-list-tournaments',
@@ -18,7 +20,8 @@ import { PaginatorModule } from 'primeng/paginator';
     InputTextModule,
     InputIcon,
     IconField,
-    PaginatorModule
+    PaginatorModule,
+    ProgressSpinnerModule
   ],
   templateUrl: './list-tournaments.component.html',
   styleUrl: './list-tournaments.component.scss',
@@ -29,6 +32,7 @@ export class ListTournamentsComponent implements OnInit {
   paginatedTournaments: any[] = [];
   rows = 8;
   first = 0;
+  loading: boolean = false;
 
   gameImages: { [key: string]: string } = {
     'FIFA': 'assets/images/fifa.jpg',
@@ -45,6 +49,7 @@ export class ListTournamentsComponent implements OnInit {
   }
 
   listAllTournaments() {
+    this.loading = true;
     this.tournamentService.getAllTournaments().subscribe({
       next: (data: any) => {
         this.tournaments = data.items;
@@ -53,6 +58,9 @@ export class ListTournamentsComponent implements OnInit {
       },
       error: (error) => {
         console.log('Erro ao buscar torneios', error);
+      },
+      complete: () => {
+        this.loading = false;
       }
     })
   }
