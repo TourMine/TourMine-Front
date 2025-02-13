@@ -5,4 +5,5 @@ export const API_ENDPOINTS = {
   tournamentById: (id: string) => `${environment.apiUrl}/tournament/v1/${id}`,
   createTournament: `${environment.apiUrl}/tournament/v1/create`,
   updateTournament: (id: string) => `${environment.apiUrl}/tournament/v1/${id}`,
+  createUser: `${environment.apiUserUrl}/users/v1/create`
 };
