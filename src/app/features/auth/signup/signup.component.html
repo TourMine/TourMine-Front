@@ -4,24 +4,24 @@
     </div>
   
     <div class="w-full lg:w-2/5 flex justify-center items-center">
-      <form [formGroup]="signupForm" (ngSubmit)="signup()"  class="flex flex-col gap-5 p-8 w-3/4 max-w-md shadow-lg rounded-lg">
+      <form [formGroup]="signupForm" (ngSubmit)="criarUsuario()"  class="flex flex-col gap-5 p-8 w-3/4 max-w-md shadow-lg rounded-lg">
         <h2 class="text-3xl font-medium text-center">Cadastro</h2>
   
         <div class="flex flex-col gap-2">
-            <label for="username">Username</label>
+            <label for="name">Name</label>
             <input 
                 pInputText 
-                formControlName="username" 
-                type="username" 
-                id="username" 
-                name="username"
+                formControlName="name" 
+                type="name" 
+                id="name" 
+                name="name"
                 [ngClass]="[
-                    signupForm.get('username')?.hasError('required') && signupForm.get('username')?.touched  ? 'ng-invalid ng-dirty' : ''
+                    signupForm.get('name')?.hasError('required') && signupForm.get('name')?.touched  ? 'ng-invalid ng-dirty' : ''
                 ]"
             />
-            @if (isFieldInvalid("username")) {
+            @if (isFieldInvalid("name")) {
                 <small class="text-red-500">
-                    O username é obrigatório.
+                    O name é obrigatório.
                 </small>
             }
         </div>
@@ -64,39 +64,36 @@
         </div>
 
         <div class="flex flex-wrap gap-4 mb-2">
-          <div class="flex items-center">
-            <p-radiobutton 
+            <div class="flex items-center">
+              <p-radiobutton 
                 name="userType"
                 formControlName="userType" 
-                value="participant" 
-                [(ngModel)]="userType" 
+                [value]="1" 
                 inputId="participant"
                 [ngClass]="[
                     signupForm.get('userType')?.hasError('required') && signupForm.get('userType')?.touched  ? 'ng-invalid ng-dirty' : ''
                 ]"
-            />
+              />
               <label for="participant" class="ml-2">Participante</label>
-          </div>
-  
-          <div class="flex items-center">
-            <p-radiobutton 
+            </div>
+          
+            <div class="flex items-center">
+              <p-radiobutton 
                 name="userType" 
                 formControlName="userType"
-                value="organizer" 
-                [(ngModel)]="userType" 
+                [value]="2" 
                 inputId="organizer"
                 [ngClass]="[
                     signupForm.get('userType')?.hasError('required') && signupForm.get('userType')?.touched  ? 'ng-invalid ng-dirty' : ''
                 ]" 
-            />
-            <label for="organizer" class="ml-2">Organizador</label>
-          </div>
-          @if (isFieldInvalid("userType")) {
-            <small class="text-red-500">
-                É necessário informar o tipo de usuário.
+              />
+              <label for="organizer" class="ml-2">Organizador</label>
+            </div>
+            
+            <small *ngIf="isFieldInvalid('userType')" class="text-red-500">
+              É necessário informar o tipo de usuário.
             </small>
-        }
-        </div>
+          </div>
   
         <div>
           <p-button 
