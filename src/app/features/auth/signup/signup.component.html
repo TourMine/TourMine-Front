@@ -103,6 +103,7 @@
             label="Cadastrar"
             type="submit"
             [disabled]="signupForm.invalid"
+            [loading]="loading"
           />
         </div>
         <p class="text-xs"><a routerLink="/login" class="underline cursor-pointer font-medium">Entrar</a></p>

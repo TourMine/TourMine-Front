@@ -46,6 +46,7 @@
             label="Entrar"
             type="submit"
             [disabled]="loginForm.invalid"
+            [loading]="loading"
           />
         </div>
         <p class="text-xs">Não possue uma conta ainda? <a routerLink="/signup" class="underline cursor-pointer font-medium">Cadastra-se!</a></p>

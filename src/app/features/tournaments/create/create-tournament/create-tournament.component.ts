@@ -42,6 +42,8 @@ import { Router } from '@angular/router';
 export class CreateTournamentComponent {
   minStartDate: Date = new Date();
   minEndDate: Date = new Date();
+  
+  loading: boolean = false;
 
   participantsTypeOptions = Object.keys(EParticipantsType)
     .filter(key => !isNaN(Number(EParticipantsType[key as keyof typeof EParticipantsType])))
@@ -102,6 +104,7 @@ export class CreateTournamentComponent {
   }
 
   criarTorneio() {
+    this.loading = true;
     if (this.createTournamentForm.valid) {
       const torneio: Tournament = {
         name: this.createTournamentForm.value.name!,
@@ -117,14 +120,9 @@ export class CreateTournamentComponent {
         description: this.createTournamentForm.value.description!
       };
   
-      console.log('Enviando torneio:', torneio);
-      console.log('Valores do formulário:', this.createTournamentForm.value);
-  
       this.TournamentService.createTournament(torneio).subscribe({
         next: (response) => {
-          console.log('Torneio criado com sucesso!', response);
           this.createTournamentForm.reset();
-
           this.successMessage = 'Torneio criado com sucesso!';
 
           setTimeout(() => {
@@ -135,6 +133,9 @@ export class CreateTournamentComponent {
         },
         error: (error) => {
           console.error('Erro ao criar torneio', error);
+        },
+        complete: () => {
+          this.loading = false;
         }
       });
     }

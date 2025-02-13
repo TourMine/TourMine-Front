@@ -30,6 +30,8 @@ export class SignupComponent {
   password!: string;
   userType!: string;
 
+  loading: boolean = false;
+
   constructor(private fb: FormBuilder, private router: Router) {
     this.signupForm = this.fb.group({
       username: ['', [Validators.required]],

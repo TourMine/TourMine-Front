@@ -247,6 +247,7 @@
             label="Criar"
             type="submit"
             [disabled]="createTournamentForm.invalid"
+            [loading]="loading"
             (click)="criarTorneio()"
             class="btn-submit"
         />

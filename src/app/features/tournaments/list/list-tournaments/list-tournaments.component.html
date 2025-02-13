@@ -25,8 +25,13 @@
         (update)="updateTournament(tournament.id)">
       </app-tournament-card>
     }
-    @if (!filteredTournaments.length) { 
+    @if (!filteredTournaments.length && !loading) { 
       <h2 class="text-xl text-center">Não há torneios correspondentes à sua pesquisa!</h2>
+    }
+    @if (loading) {
+      <div class="card flex justify-center">
+        <p-progress-spinner ariaLabel="loading" />
+      </div>
     }
   </div>
 
