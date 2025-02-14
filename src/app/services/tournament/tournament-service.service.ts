@@ -26,4 +26,8 @@ export class TournamentServiceService {
     return this.http.put<any>(API_ENDPOINTS.updateTournament(id), tournamentData);
   }
 
+  createSubscription(subscriptionData: any): Observable<any> {
+    return this.http.post<any>(API_ENDPOINTS.createSubscription, subscriptionData);
+  }
+
 }

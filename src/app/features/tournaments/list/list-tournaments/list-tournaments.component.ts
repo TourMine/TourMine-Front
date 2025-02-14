@@ -9,7 +9,9 @@ import { InputIcon } from 'primeng/inputicon';
 import { IconField } from 'primeng/iconfield';
 import { PaginatorModule } from 'primeng/paginator';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { waitForAsync } from '@angular/core/testing';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-list-tournaments',
@@ -21,10 +23,13 @@ import { waitForAsync } from '@angular/core/testing';
     InputIcon,
     IconField,
     PaginatorModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    ToastModule,
+    ConfirmDialogModule
   ],
   templateUrl: './list-tournaments.component.html',
   styleUrl: './list-tournaments.component.scss',
+  providers: [ConfirmationService, MessageService]
 })
 export class ListTournamentsComponent implements OnInit {
   tournaments: any[] = [];
@@ -42,7 +47,7 @@ export class ListTournamentsComponent implements OnInit {
     'FORTNITE': 'assets/images/fortnite.jpg',
   };
 
-  constructor(private tournamentService: TournamentServiceService, private router: Router) {}
+  constructor(private tournamentService: TournamentServiceService, private router: Router, private messageService: MessageService) {}
 
   ngOnInit() {
     this.listAllTournaments();
@@ -52,11 +57,15 @@ export class ListTournamentsComponent implements OnInit {
     this.loading = true;
     this.tournamentService.getAllTournaments().subscribe({
       next: (data: any) => {
+        this.loading = false;
         this.tournaments = data.items;
+        console.log(this.tournaments)
         this.filteredTournaments = [...this.tournaments]
+        console.log(this.filteredTournaments)
         this.updatePaginatedTournaments();
       },
       error: (error) => {
+        this.loading = false;
         console.log('Erro ao buscar torneios', error);
       },
       complete: () => {
@@ -86,6 +95,18 @@ export class ListTournamentsComponent implements OnInit {
 
   updateTournament(id: string) {
     this.router.navigate(['/tournaments/update', id]);
+  }
+
+  subscribeToTournament(data: { tournamentId: string; userId: string }) {
+    console.log('📩 Recebendo evento de inscrição:', data);
+    this.tournamentService.createSubscription(data).subscribe({
+      next: () => {
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Inscrito com sucesso!' });
+      },
+      error: () => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Inscrição Falhou!' });
+      }
+    });
   }
 
 }

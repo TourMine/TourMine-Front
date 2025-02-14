@@ -8,9 +8,8 @@
              alt="Imagem do jogo">
     </div>
     
-    <div *ngIf="successMessage" class="fixed top-4 right-4 bg-green-500 text-white p-3 rounded-md shadow-lg">
-        {{ successMessage }}
-    </div>
+    <p-toast />
+    <p-confirmdialog />
 
     <div class="flex flex-col justify-center gap-4 p-5">
         <form [formGroup]="createTournamentForm" class="flex flex-col gap-4">

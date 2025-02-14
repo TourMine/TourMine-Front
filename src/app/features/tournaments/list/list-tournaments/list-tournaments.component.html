@@ -11,10 +11,15 @@
         <input pInputText placeholder="Pesquisar torneios..." class="w-full" (input)="applyFilter($event)" />
     </p-iconfield>
   </div>
+
+  <p-toast />
+  <p-confirmdialog />
   
   <div class="flex flex-wrap gap-4 justify-center items-center p-5 pb-10">
     @for (tournament of paginatedTournaments; track $index) {  
-      <app-tournament-card 
+      <app-tournament-card
+        [userId]="tournament.userId"
+        [tournamentId]="tournament.id"
         [name]="tournament.name"
         [game]="tournament.game"
         [plataform]="tournament.plataform"
@@ -22,7 +27,8 @@
         [startDate]="tournament.startDate"
         [status]="tournament.status"
         [image]="gameImages[tournament.game] || 'assets/images/default.jpg'"
-        (update)="updateTournament(tournament.id)">
+        (subscription)="subscribeToTournament($event)"
+      >
       </app-tournament-card>
     }
     @if (!filteredTournaments.length && !loading) { 

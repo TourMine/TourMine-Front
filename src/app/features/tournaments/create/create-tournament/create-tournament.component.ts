@@ -18,6 +18,9 @@ import { ESubscriptionType, SUBSCRIPTION_TYPE_LABELS } from '../../../../models/
 import { ETournamentStatus, TOURNAMENT_STATUS_LABELS } from '../../../../models/tournament/enums/tournament-status.enum';
 import { EGames, GAME_LABELS } from '../../../../models/tournament/enums/games.enum';
 import { Router } from '@angular/router';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 
 @Component({
@@ -34,10 +37,13 @@ import { Router } from '@angular/router';
     SelectModule,
     InputNumberModule,
     DatePicker,
-    TextareaModule
+    TextareaModule,
+    ToastModule,
+    ConfirmDialogModule
   ],
   templateUrl: './create-tournament.component.html',
-  styleUrl: './create-tournament.component.scss'
+  styleUrl: './create-tournament.component.scss',
+  providers: [ConfirmationService, MessageService]
 })
 export class CreateTournamentComponent {
   minStartDate: Date = new Date();
@@ -94,7 +100,7 @@ export class CreateTournamentComponent {
 
   successMessage: string = '';
 
-  constructor(private TournamentService: TournamentServiceService, private router: Router) {
+  constructor(private TournamentService: TournamentServiceService, private router: Router, private messageService: MessageService) {
     this.createTournamentForm.get('startDate')?.valueChanges.subscribe((startDate) => {
       if (startDate) {
         this.minEndDate = new Date(startDate);
@@ -123,7 +129,7 @@ export class CreateTournamentComponent {
       this.TournamentService.createTournament(torneio).subscribe({
         next: (response) => {
           this.createTournamentForm.reset();
-          this.successMessage = 'Torneio criado com sucesso!';
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Torneio Criado!' });
 
           setTimeout(() => {
             this.successMessage = '';
@@ -132,7 +138,7 @@ export class CreateTournamentComponent {
           
         },
         error: (error) => {
-          console.error('Erro ao criar torneio', error);
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Criação Falhou!' });
         },
         complete: () => {
           this.loading = false;

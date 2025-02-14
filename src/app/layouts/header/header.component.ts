@@ -24,8 +24,8 @@ export class HeaderComponent implements OnInit {
                 label: 'Opções',
                 items: [
                     {
-                        label: 'Configurações',
-                        icon: 'pi pi-cog',
+                        label: 'Perfil',
+                        icon: 'pi pi-user',
                         command: () => this.router.navigate(['/profile'])
                     },
                     {
