@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TournamentServiceService } from '../../../../services/tournament/tournament-service.service';
+import { TournamentService } from '../../../../services/tournament/tournament-service.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -17,7 +17,7 @@ export class UpdateTournamentComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private tournamentService: TournamentServiceService
+    private tournamentService: TournamentService
   ) {}
 
   ngOnInit() {

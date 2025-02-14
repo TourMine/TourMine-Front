@@ -3,7 +3,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { CardMainComponent } from '../../../../shared/components/card-main/card-main.component';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TournamentServiceService } from '../../../../services/tournament/tournament-service.service';
+import { TournamentService } from '../../../../services/tournament/tournament-service.service';
 import { Tournament } from '../../../../models/tournament/tournaments';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
@@ -100,7 +100,7 @@ export class CreateTournamentComponent {
 
   successMessage: string = '';
 
-  constructor(private TournamentService: TournamentServiceService, private router: Router, private messageService: MessageService) {
+  constructor(private TournamentService: TournamentService, private router: Router, private messageService: MessageService) {
     this.createTournamentForm.get('startDate')?.valueChanges.subscribe((startDate) => {
       if (startDate) {
         this.minEndDate = new Date(startDate);

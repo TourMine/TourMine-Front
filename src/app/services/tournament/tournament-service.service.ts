@@ -6,7 +6,7 @@ import { API_ENDPOINTS } from '../../core/api-endpoints';
 @Injectable({
   providedIn: 'root'
 })
-export class TournamentServiceService {
+export class TournamentService {
 
   constructor(private http: HttpClient) { }
 
@@ -24,10 +24,6 @@ export class TournamentServiceService {
 
   updateTournament(id: string, tournamentData: any): Observable<any> {
     return this.http.put<any>(API_ENDPOINTS.updateTournament(id), tournamentData);
-  }
-
-  createSubscription(subscriptionData: any): Observable<any> {
-    return this.http.post<any>(API_ENDPOINTS.createSubscription, subscriptionData);
   }
 
 }
