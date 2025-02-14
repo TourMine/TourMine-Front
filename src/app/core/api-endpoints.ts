@@ -13,6 +13,6 @@ export const API_ENDPOINTS = {
   updateSubscription: (userId: string, tournamentId: string) => `${environment.apiUrl}/subscription/v1/${userId}/${tournamentId}`,
 
   // User
-  createUser: `${environment.apiUrl}/users/v1/create`
+  registerUser: `${environment.apiUrl}/auth/register`
 
 };

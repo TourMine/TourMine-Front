@@ -62,7 +62,7 @@ export class SignupComponent {
 
         };
 
-        console.log("Dados enviados para a API:", usuario); // Log dos dados enviados
+        console.log("Dados enviados para a BFF:", usuario); // Log dos dados enviados
     
         this.UsersService.createUser(usuario).subscribe({
           next: (response) => {
