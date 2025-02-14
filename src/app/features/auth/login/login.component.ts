@@ -6,6 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { Router, RouterModule } from '@angular/router';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -28,7 +29,7 @@ export class LoginComponent {
 
   loading: boolean = false;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -37,8 +38,13 @@ export class LoginComponent {
 
   login(): void {
     if (this.loginForm.valid) {
-      this.router.navigate(['/tournaments/list']);
+      const { email, password } = this.loginForm.value;
+      this.authService.login(email, password); 
     }
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 
   isFieldInvalid(field: string): boolean {

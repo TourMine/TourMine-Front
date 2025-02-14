@@ -7,6 +7,7 @@ import { HomeComponent } from './layouts/home/home.component';
 import { SignupComponent } from './features/auth/signup/signup.component';
 import { ProfilePageComponent } from './features/profile/profile-page/profile-page.component';
 import { MySubscriptionsComponent } from './features/subscriptions/my-subscriptions/my-subscriptions.component';
+import { AuthGuard } from './services/auth/auth.guard';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -17,11 +18,11 @@ export const routes: Routes = [
         path: '',
         component: HomeComponent,
         children: [
-            { path: 'profile', component: ProfilePageComponent },
-            { path: 'tournaments/list', component: ListTournamentsComponent },
-            { path: 'tournaments/create', component: CreateTournamentComponent },
-            { path: 'tournaments/update/:id', component: UpdateTournamentComponent},
-            { path: 'my-subscriptions', component: MySubscriptionsComponent}
+            { path: 'profile', component: ProfilePageComponent, canActivate: [AuthGuard] },
+            { path: 'tournaments/list', component: ListTournamentsComponent, canActivate: [AuthGuard] },
+            { path: 'tournaments/create', component: CreateTournamentComponent, canActivate: [AuthGuard] },
+            { path: 'tournaments/update/:id', component: UpdateTournamentComponent, canActivate: [AuthGuard]},
+            { path: 'my-subscriptions', component: MySubscriptionsComponent, canActivate: [AuthGuard]}
         ]
     },
 

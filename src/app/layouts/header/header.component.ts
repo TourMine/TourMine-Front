@@ -3,6 +3,7 @@ import { MenuItem } from 'primeng/api';
 import { Menu } from 'primeng/menu';
 import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +17,7 @@ import { Router } from '@angular/router';
 export class HeaderComponent implements OnInit {
   items: MenuItem[] | undefined;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
     ngOnInit() {
         this.items = [
@@ -39,5 +40,6 @@ export class HeaderComponent implements OnInit {
     }
 
     logout() {
+        this.authService.logout();
     }
 }
