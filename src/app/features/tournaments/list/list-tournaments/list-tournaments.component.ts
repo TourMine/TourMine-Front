@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { TournamentServiceService } from '../../../../services/tournament/tournament-service.service';
+import { TournamentService } from '../../../../services/tournament/tournament-service.service';
 import { CommonModule } from '@angular/common';
 import { CardMainComponent } from '../../../../shared/components/card-main/card-main.component';
 import { Router } from '@angular/router';
@@ -12,6 +12,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { SubscriptionService } from '../../../../services/subscription/subscription.service';
 
 @Component({
   selector: 'app-list-tournaments',
@@ -47,7 +48,11 @@ export class ListTournamentsComponent implements OnInit {
     'FORTNITE': 'assets/images/fortnite.jpg',
   };
 
-  constructor(private tournamentService: TournamentServiceService, private router: Router, private messageService: MessageService) {}
+  constructor(
+    private tournamentService: TournamentService, 
+    private subscriptionService: SubscriptionService,
+    private router: Router, 
+    private messageService: MessageService) {}
 
   ngOnInit() {
     this.listAllTournaments();
@@ -99,9 +104,10 @@ export class ListTournamentsComponent implements OnInit {
 
   subscribeToTournament(data: { tournamentId: string; userId: string }) {
     console.log('📩 Recebendo evento de inscrição:', data);
-    this.tournamentService.createSubscription(data).subscribe({
+    this.subscriptionService.createSubscription(data).subscribe({
       next: () => {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Inscrito com sucesso!' });
+        this.router.navigate(['my-subscriptions'])
       },
       error: () => {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Inscrição Falhou!' });

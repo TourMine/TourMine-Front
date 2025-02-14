@@ -1,0 +1,29 @@
+<app-card-main>
+    <div class="flex justify-around items-center mb-2">
+      <div>
+        <h1 class="uppercase text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold py-5 md:py-10">Minhas Inscrições</h1>
+      </div>
+    </div>
+
+    <div class="p-5">
+        <p-toast />
+        <p-progressSpinner *ngIf="loading"></p-progressSpinner>
+        
+        <div *ngIf="!loading && subscriptions.length === 0" class="p-col-12">
+            <p class="text-center">Você ainda não está inscrito em nenhum torneio.</p>
+        </div>
+
+        <div *ngFor="let sub of subscriptions" class="flex justify-start items-center p-col-12 p-md-6 p-lg-4">
+            <p-card>
+                <ng-template pTemplate="title">
+                {{ sub.tournament?.name || 'Torneio desconhecido' }}
+                </ng-template>
+                <ng-template pTemplate="content">
+                <p><strong>Data de Inscrição:</strong> {{ sub.subscrpitionDate | date:'dd/MM/yyyy HH:mm' }}</p>
+                <p><strong>Status:</strong> {{ sub.status === 1 ? 'Confirmado' : 'Pendente' }}</p>
+                </ng-template>
+            </p-card>
+        </div>
+    </div>
+</app-card-main>
+  

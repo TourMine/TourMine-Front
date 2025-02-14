@@ -6,6 +6,7 @@ import { LoginComponent } from './features/auth/login/login.component';
 import { HomeComponent } from './layouts/home/home.component';
 import { SignupComponent } from './features/auth/signup/signup.component';
 import { ProfilePageComponent } from './features/profile/profile-page/profile-page.component';
+import { MySubscriptionsComponent } from './features/subscriptions/my-subscriptions/my-subscriptions.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -20,6 +21,7 @@ export const routes: Routes = [
             { path: 'tournaments/list', component: ListTournamentsComponent },
             { path: 'tournaments/create', component: CreateTournamentComponent },
             { path: 'tournaments/update/:id', component: UpdateTournamentComponent},
+            { path: 'my-subscriptions', component: MySubscriptionsComponent}
         ]
     },
 

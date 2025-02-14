@@ -35,6 +35,11 @@ export class SidebarComponent {
       icon: 'fa-solid fa-trophy',
       label: 'Torneios',
     },
+    {
+      routeLink: 'my-subscriptions',
+      icon: 'fa-solid fa-list-ul',
+      label: 'Minhas Inscrições',
+    },
   ];
 
   // Alterna o estado de colapso da sidebar
