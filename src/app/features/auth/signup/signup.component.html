@@ -68,7 +68,7 @@
               <p-radiobutton 
                 name="userType"
                 formControlName="userType" 
-                [value]="1" 
+                [value]="2" 
                 inputId="participant"
                 [ngClass]="[
                     signupForm.get('userType')?.hasError('required') && signupForm.get('userType')?.touched  ? 'ng-invalid ng-dirty' : ''
@@ -81,7 +81,7 @@
               <p-radiobutton 
                 name="userType" 
                 formControlName="userType"
-                [value]="2" 
+                [value]="1" 
                 inputId="organizer"
                 [ngClass]="[
                     signupForm.get('userType')?.hasError('required') && signupForm.get('userType')?.touched  ? 'ng-invalid ng-dirty' : ''
