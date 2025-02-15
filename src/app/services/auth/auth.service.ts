@@ -72,6 +72,14 @@ export class AuthService {
     return JSON.parse(atob(payload));
   }
 
+  public getUserRole(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+  
+    const payload = this.decodeJwt(token);
+    return payload?.role || null;
+  }
+
   public get currentUserValue() {
     return this.currentUserSubject.value;
   }
