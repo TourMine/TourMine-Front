@@ -8,6 +8,7 @@ import { CardModule } from 'primeng/card';
 import { forkJoin, Observable } from 'rxjs';
 import { TournamentService } from '../../../services/tournament/tournament-service.service';
 import { CardMainComponent } from '../../../shared/components/card-main/card-main.component';
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-my-subscriptions',
@@ -24,23 +25,31 @@ import { CardMainComponent } from '../../../shared/components/card-main/card-mai
 })
 export class MySubscriptionsComponent implements OnInit {
   subscriptions: any[] = [];
-  userId: string = "a01d89d1-7ed3-46e7-9c9a-19260914ca61";
+  userId: string | null = null;
   loading: boolean = false;
 
   constructor(
     private subscriptionService: SubscriptionService,
     private tournamentService: TournamentService,
-    private messageService: MessageService) {}
+    private messageService: MessageService, 
+    private authService: AuthService) {}
 
   ngOnInit() {
-    this.loadSubscriptions();
+    this.userId = this.authService.getUserId(); // Obtendo o userId do AuthService
+    if (this.userId) {
+      this.loadSubscriptions();
+    } else {
+      this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Usuário não autenticado' });
+    }
   }
 
   loadSubscriptions() {
+    if (!this.userId) return;
     this.loading = true;
-
+    
     this.subscriptionService.getAllSubscriptionsByUserId(this.userId).subscribe({
       next: (response: any) => {
+        console.log('Respostas de Inscrição:', response);
         if (response.total === 0) {
           this.subscriptions = [];
           this.loading = false;

@@ -80,6 +80,14 @@ export class AuthService {
     return payload?.role || null;
   }
 
+  public getUserId(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+  
+    const payload = this.decodeJwt(token);
+    return payload?.userId || null; // Supondo que o token contenha um campo 'userId'
+  }
+
   public get currentUserValue() {
     return this.currentUserSubject.value;
   }

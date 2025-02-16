@@ -10,6 +10,7 @@ import { ToastModule } from 'primeng/toast';
 import { EPlataforms, PLATAFORMS_LABELS } from '../../../models/tournament/enums/plataforms.enum';
 import { ETournamentStatus, TOURNAMENT_STATUS_LABELS } from '../../../models/tournament/enums/tournament-status.enum';
 import { EGames, GAME_LABELS } from '../../../models/tournament/enums/games.enum';
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-tournament-card',
@@ -54,12 +55,20 @@ export class TournamentCardComponent {
     return TOURNAMENT_STATUS_LABELS[this.status];
   }
 
-  constructor(private confirmationService: ConfirmationService) {}
+  constructor(private confirmationService: ConfirmationService,
+    private authService: AuthService
+  ) {}
 
 
   confirmSubscription(event: Event) {
     console.log('🔍 Abrindo modal de confirmação...');
 
+    const loggedUserId = this.authService.getUserId();
+    if (!loggedUserId) {
+
+      console.error('Erro: Usuário não autenticado');
+      return;
+  }
     this.confirmationService.confirm({
       target: event.target as EventTarget,
       message: 'Você tem certeza que quer participar desse torneio?',
@@ -74,8 +83,10 @@ export class TournamentCardComponent {
         label: 'Sim, Participar'
       },
       accept: () => {
-        console.log('✅ Emitindo evento de inscrição:', { tournamentId: this.tournamentId, userId: this.userId });
-        this.subscription.emit({ tournamentId: this.tournamentId, userId: this.userId });
+        
+      console.log('✅ Emitindo evento de inscrição:', { tournamentId: this.tournamentId, userId: loggedUserId });
+
+      this.subscription.emit({ tournamentId: this.tournamentId, userId: loggedUserId });
       }
     });
   }
