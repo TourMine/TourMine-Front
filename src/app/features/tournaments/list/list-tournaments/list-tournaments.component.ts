@@ -13,6 +13,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SubscriptionService } from '../../../../services/subscription/subscription.service';
+import { AuthService } from '../../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-list-tournaments',
@@ -39,6 +40,7 @@ export class ListTournamentsComponent implements OnInit {
   rows = 8;
   first = 0;
   loading: boolean = false;
+  userId: string | null = null;
 
   gameImages: { [key: string]: string } = {
     'FIFA': 'assets/images/fifa.jpg',
@@ -52,11 +54,19 @@ export class ListTournamentsComponent implements OnInit {
     private tournamentService: TournamentService, 
     private subscriptionService: SubscriptionService,
     private router: Router, 
-    private messageService: MessageService) {}
+    private messageService: MessageService,
+    private authService: AuthService) {}
 
   ngOnInit() {
+    this.userId = this.authService.getUserId();
     this.listAllTournaments();
+    console.log(this.userId);
   }
+
+  // getUserId() {
+  //   this.userId = this.authService.getUserId(); 
+  //   console.log('Usuário autenticado:', this.userId);
+  // }
 
   listAllTournaments() {
     this.loading = true;
@@ -107,7 +117,7 @@ export class ListTournamentsComponent implements OnInit {
     this.subscriptionService.createSubscription(data).subscribe({
       next: () => {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Inscrito com sucesso!' });
-        this.router.navigate(['my-subscriptions'])
+        this.router.navigate(['my-subscriptions']);
       },
       error: () => {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Inscrição Falhou!' });

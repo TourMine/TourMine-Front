@@ -1,4 +1,5 @@
 export interface Tournament {
+    userId: string;
     name: string;
     game: string;
     plataform: number;
