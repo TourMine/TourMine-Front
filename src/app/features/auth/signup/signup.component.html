@@ -1,36 +1,40 @@
 <div class="h-screen flex">
 
-  <div class="hidden lg:flex lg:flex-col justify-end items-center border-none h-screen w-3/5 gap-24 bg-neutral-900 bg-cover bg-center">
+  <div class="hidden lg:flex lg:flex-col justify-center items-center border-none h-screen w-3/5 bg-neutral-900 bg-cover bg-center">
 
-    <div class="flex flex-col justify-center items-start gap-5 mt-10 p-6 m-5 bg-black/50 backdrop-blur-md rounded-lg shadow-lg">
+    <div class="flex flex-col justify-center items-start gap-5 mt-10 p-6 m-5">
     
-      <h1 class="text-5xl font-bold text-white p-3 border-l-4 border-primary shadow-md">
+      <h1 class="text-5xl font-bold text-white p-3 border-l-4 border-primary">
         Junte-se à nossa comunidade e entre no jogo!
       </h1>
       
-      <h2 class="text-3xl font-medium text-white p-3 border-l-4 border-secondary">
+      <h2 class="text-3xl font-medium text-white p-3 border-l-4 border-neutral-700">
         Cadastre-se agora para organizar torneios e competir com os melhores.
       </h2>
   
     </div>
   
-    <div class="w-full bg-neutral-950 pt-5">
+    <div class="flex flex-col justify-center items-center w-full bg-transparent">
       <p-carousel 
         [value]="depoimentos" 
         [numVisible]="1" 
         [numScroll]="1" 
         [circular]="true" 
-        [autoplayInterval]="3000">
+        [autoplayInterval]="3000"
+        class="w-1/2">
       <ng-template let-depoimento pTemplate="item">
         <div class="flex items-center justify-start gap-4 text-white bg-gray-800 p-4 m-10 rounded-lg shadow-md">
           <p-avatar icon="pi pi-user" class="mr-2" size="large" shape="circle" />
-          <div>
-            <p class="italic">"{{ depoimento.texto }}"</p>
-            <p class="mt-2 font-semibold">— {{ depoimento.autor }}</p>
+          <div class="flex-1">
+            <p class="italic text-wrap">"{{ depoimento.texto }}"</p>
+            <p class="mt-2 font-semibold text-wrap">— {{ depoimento.autor }}</p>
           </div>
         </div>
       </ng-template>
       </p-carousel>
+
+      <div class="flex justify-center w-32 h-1 bg-primary text-center">
+      </div>
     </div>
   </div>
   
