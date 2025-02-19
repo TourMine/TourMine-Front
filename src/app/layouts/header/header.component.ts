@@ -25,14 +25,14 @@ export class HeaderComponent implements OnInit {
                 label: 'Opções',
                 items: [
                     {
-                        label: 'Perfil',
+                        label: 'Meu Perfil',
                         icon: 'pi pi-user',
                         command: () => this.router.navigate(['/profile'])
                     },
                     {
                         label: 'Sair',
                         icon: 'pi pi-sign-out',
-                        command: () => this.logout() // TODO: logout
+                        command: () => this.logout()
                     }
                 ]
             }

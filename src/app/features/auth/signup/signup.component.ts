@@ -5,8 +5,11 @@ import { FormBuilder, FormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { Router, RouterModule } from '@angular/router';
 import { RadioButton } from 'primeng/radiobutton';
+import { Carousel } from 'primeng/carousel';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AvatarModule } from 'primeng/avatar';
+import { AvatarGroupModule } from 'primeng/avatargroup';
 import { User } from '../../../models/users/users';
 import { UsersService } from '../../../services/users/users.service';
 
@@ -19,7 +22,10 @@ import { UsersService } from '../../../services/users/users.service';
     FormsModule,
     ButtonModule,
     ReactiveFormsModule,
-    RouterModule, 
+    RouterModule,
+    Carousel,
+    AvatarModule,
+    AvatarGroupModule,
     RadioButton
   ],
   templateUrl: './signup.component.html',
@@ -35,6 +41,20 @@ export class SignupComponent {
   loading: boolean = false;
 
   successMessage: string = '';
+
+  depoimentos = [
+    { avatar: "A", texto: "Gerenciar torneios nunca foi tão fácil!", autor: "Lucas Silva" },
+    { avatar: "B", texto: "Agora posso acompanhar minhas inscrições com poucos cliques!", autor: "Mariana Rocha" },
+    { avatar: "C", texto: "Simples, rápido e eficiente. Recomendo!", autor: "Pedro Martins" }
+  ];
+
+  imagensPequenas = [
+    "assets/img/csgo2.jpg",
+    "assets/img/csgo2.jpg",
+    "assets/img/csgo2.jpg",
+    "assets/img/csgo2.jpg",
+    "assets/img/csgo2.jpg"
+  ];
 
   constructor(private fb: FormBuilder, private UsersService: UsersService, private router: Router) {
     this.signupForm = this.fb.group({
