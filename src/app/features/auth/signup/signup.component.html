@@ -4,40 +4,22 @@
     </div>
   
     <div class="w-full lg:w-2/5 flex justify-center items-center">
-      <form [formGroup]="signupForm" (ngSubmit)="criarUsuario()"  class="flex flex-col gap-5 p-8 w-3/4 max-w-md shadow-lg rounded-lg">
+      <form [formGroup]="signupForm" (ngSubmit)="signup()"  class="flex flex-col gap-5 p-8 w-3/4 max-w-md shadow-lg rounded-lg">
         <h2 class="text-3xl font-medium text-center">Cadastro</h2>
   
         <div class="flex flex-col gap-2">
-            <label for="name">Nome</label>
-            <input 
-                pInputText 
-                formControlName="name" 
-                type="name" 
-                id="name" 
-                name="name"
-                [ngClass]="[
-                    signupForm.get('name')?.hasError('required') && signupForm.get('name')?.touched  ? 'ng-invalid ng-dirty' : ''
-                ]"
-            />
-            @if (isFieldInvalid("name")) {
+            <label for="username">Username</label>
+            <input pInputText formControlName="username" type="username" id="username" name="username" />
+            @if (isFieldInvalid("username")) {
                 <small class="text-red-500">
-                    O name é obrigatório.
+                    O username é obrigatório.
                 </small>
             }
         </div>
 
         <div class="flex flex-col gap-2">
             <label for="email">Email</label>
-            <input 
-                pInputText 
-                formControlName="email" 
-                type="email" 
-                id="email" 
-                name="email"
-                [ngClass]="[
-                    signupForm.get('email')?.hasError('required') && signupForm.get('email')?.touched  ? 'ng-invalid ng-dirty' : ''
-                ]"
-            />
+            <input pInputText formControlName="email" type="email" id="email" name="email" />
              @if (isFieldInvalid("email")) {
                 <small class="text-red-500">
                     O email é obrigatório e deve ser um email válido.
@@ -47,60 +29,18 @@
 
         <div class="flex flex-col gap-2">
             <label for="password">Senha</label>
-            <p-password 
-                formControlName="password" 
-                id="password" 
-                name="password" 
-                [toggleMask]="true"
-                [ngClass]="[
-                    signupForm.get('password')?.hasError('required') && signupForm.get('password')?.touched  ? 'ng-invalid ng-dirty' : ''
-                ]"
-            ></p-password>
+            <p-password formControlName="password" id="password" name="password" [toggleMask]="true"></p-password>
             @if (isFieldInvalid("password")) {
                 <small class="text-red-500">
                     A senha é obrigatória e deve ter pelo menos 6 caracteres.
                 </small>
             }
         </div>
-
-        <div class="flex flex-wrap gap-4 mb-2">
-            <div class="flex items-center">
-              <p-radiobutton 
-                name="userType"
-                formControlName="userType" 
-                [value]="2" 
-                inputId="participant"
-                [ngClass]="[
-                    signupForm.get('userType')?.hasError('required') && signupForm.get('userType')?.touched  ? 'ng-invalid ng-dirty' : ''
-                ]"
-              />
-              <label for="participant" class="ml-2">Participante</label>
-            </div>
-          
-            <div class="flex items-center">
-              <p-radiobutton 
-                name="userType" 
-                formControlName="userType"
-                [value]="1" 
-                inputId="organizer"
-                [ngClass]="[
-                    signupForm.get('userType')?.hasError('required') && signupForm.get('userType')?.touched  ? 'ng-invalid ng-dirty' : ''
-                ]" 
-              />
-              <label for="organizer" class="ml-2">Organizador</label>
-            </div>
-            
-            <small *ngIf="isFieldInvalid('userType')" class="text-red-500">
-              É necessário informar o tipo de usuário.
-            </small>
-          </div>
   
         <div>
           <p-button 
             label="Cadastrar"
-            type="submit"
             [disabled]="signupForm.invalid"
-            [loading]="loading"
           />
         </div>
         <p class="text-xs"><a routerLink="/login" class="underline cursor-pointer font-medium">Entrar</a></p>
