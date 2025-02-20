@@ -5,6 +5,8 @@ import { Router, RouterModule } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
+import { AuthService } from '../../../services/auth/auth.service';
+import { UsersService } from '../../../services/users/users.service';
 
 @Component({
   selector: 'app-profile-page',
@@ -23,14 +25,21 @@ import { ButtonModule } from 'primeng/button';
 export class ProfilePageComponent implements OnInit {
   editProfileForm!: FormGroup;
   formChanged: boolean = false;
+  userId!: string | null; // ID do usuário logado
 
-  constructor(private fb: FormBuilder, private router: Router) {}
+
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService, private usersService: UsersService) {}
 
   ngOnInit(): void {
+    // Obtém o userId do usuário autenticado via AuthService
+    this.userId = this.authService.getUserId();
+    console.log(this.userId);
+
+    // Inicializa o formulário
     this.editProfileForm = this.fb.group({
-      username: ['', [Validators.required]],
+      Name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.minLength(6)]], // Senha não obrigatória na edição
     });
 
     this.editProfileForm.valueChanges.subscribe(() => {
@@ -43,9 +52,26 @@ export class ProfilePageComponent implements OnInit {
     return !!(control?.invalid && control.touched);
   }
 
+
   editProfile(): void {
-    if (this.editProfileForm.valid) {
-      this.router.navigate(['/tournaments/list']);
+    if (this.editProfileForm.valid && this.userId) {
+      const updateData = this.editProfileForm.value;
+
+      // Removendo a senha se o campo estiver vazio (não alterar a senha)
+      if (!updateData.password) {
+        delete updateData.password;
+      }
+
+      this.usersService.updateUser(this.userId, updateData)
+        .subscribe({
+          next: (response) => {
+            console.log('Perfil atualizado com sucesso:', response);
+            this.router.navigate(['/tournaments/list']);
+          },
+          error: (err) => {
+            console.error('Erro ao atualizar perfil:', err);
+          }
+        });
     }
   }
 }
