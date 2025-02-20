@@ -1,15 +1,62 @@
-<mat-card appearance="outlined" class="max-w-64 md:max-w-80 shadow-md">
-  <img mat-card-image class="" src="https://alppetro.co.id/dist/assets/images/default.jpg" alt="">
-    <mat-card-header>
-      <mat-card-title class="text-lg lg:text-xl font-bold">{{ title }}</mat-card-title>
-      <mat-card-subtitle class="text-base md:text-lg lg:text-lg font-semibold text-blue-600">{{ subtitle }}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content class="mt-2 mb-2">
-      <p class="text-sm md:text-base text-gray-300">{{ description }}</p>
-    </mat-card-content>
-    <mat-card-actions class="flex justify-around">
-        <app-button class="text-xs md:text-base" [variant]="'primary'">Teste 1</app-button>
-        <app-button class="text-xs md:text-base" [variant]="'secondary'">Teste 2</app-button>
-    </mat-card-actions>
-</mat-card>
-  
+<p-toast />
+<p-confirmdialog />
+
+<a 
+  (click)="details.emit()"
+>
+  <p-card [style]="{ overflow: 'hidden' }">
+    <ng-template #header>
+      <img [src]="image" alt="{{ name }}" class="w-full h-40 object-cover rounded-lg">
+    </ng-template>
+    <ng-template #title>{{ name }}</ng-template>
+    <ng-template #subtitle>{{ gameLabel }} - {{ plataformLabel }}</ng-template>
+    <p>Máx. Times: {{ maxTeams }}</p>
+    <p>Data Início: {{ startDate | date }}</p>
+    <p>Status: {{ statusLabel }}</p>
+    <ng-template #footer>
+        <div class="flex flex-col md:flex-row gap-4 mt-2">
+            @if (isOrganizer) {
+              <p-button 
+                label="Editar" 
+                severity="secondary"
+                class="w-full" 
+                [outlined]="true" 
+                styleClass="w-full"
+                (click)="update.emit()"
+              />
+              <p-button 
+                label="Excluir" 
+                severity="primary"
+                class="w-full" 
+                [outlined]="true" 
+                styleClass="w-full"
+                (click)="delete.emit()" 
+              />
+            } @else {
+                @if (status == 1 || status == 2) {
+                  <p-button 
+                    label="Participar" 
+                    class="w-full" 
+                    styleClass="w-full" 
+                    (click)="confirmSubscription($event); $event.preventDefault()"
+                  />
+                } @else if (status == 3) {
+                  <p-button 
+                    label="Em andamento" 
+                    class="w-full" 
+                    styleClass="w-full" 
+                    [disabled]="true"
+                  />
+                } @else {
+                  <p-button 
+                    label="Encerrado" 
+                    class="w-full" 
+                    styleClass="w-full" 
+                    [disabled]="true"
+                  />
+                }
+              }
+        </div>
+    </ng-template>
+  </p-card>
+</a>

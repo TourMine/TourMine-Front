@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, input, Output, output } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -14,6 +15,7 @@ import { RouterModule } from '@angular/router';
 export class SidebarComponent {
   // Controle do colapso da sidebar
   isCollapsed = false;
+  role: string = '';
 
   @Input() isLeftSidebarCollapsed: boolean = false;  // Recebe o estado do componente pai
   @Output() changeIsLeftSidebarCollapsed = new EventEmitter<boolean>();  // Emite mudanças para o componente pai
@@ -35,7 +37,18 @@ export class SidebarComponent {
       icon: 'fa-solid fa-trophy',
       label: 'Torneios',
     },
+    {
+      routeLink: 'my-subscriptions',
+      icon: 'fa-solid fa-list-ul',
+      label: 'Minhas Inscrições',
+    },
   ];
+
+  constructor(private authService: AuthService) {
+    this.role = this.authService.getUserRole() ?? '';
+    console.log('Role do usuário:', this.role);
+
+  }
 
   // Alterna o estado de colapso da sidebar
   toggleCollapse(): void {
