@@ -13,4 +13,9 @@ export class UsersService {
   createUser(userData: any): Observable<any> {
     return this.http.post<any>(API_ENDPOINTS.registerUser, userData);
   }
+
+  updateUser(id: string, userData: any): Observable<any> {
+    return this.http.put<any>(API_ENDPOINTS.updateUser(id), userData);
+  }
+
 }

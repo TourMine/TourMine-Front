@@ -12,11 +12,11 @@
             </div>
       
             <div class="flex flex-col gap-2">
-                <label for="username">Username</label>
-                <input pInputText formControlName="username" type="username" id="username" name="username" />
-                @if (isFieldInvalid("username")) {
+                <label for="Name">Name</label>
+                <input pInputText formControlName="Name" type="Name" id="Name" name="Name" />
+                @if (isFieldInvalid("Name")) {
                     <small class="text-red-500">
-                        O username não pode ficar vazio.
+                        O Name não pode ficar vazio.
                     </small>
                 }
             </div>
@@ -44,6 +44,7 @@
             <div>
               <p-button 
                 label="Salvar"
+                type="submit"
                 [disabled]="editProfileForm.invalid"
               />
             </div>
