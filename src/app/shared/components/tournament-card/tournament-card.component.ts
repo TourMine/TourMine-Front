@@ -12,6 +12,8 @@ import { ETournamentStatus, TOURNAMENT_STATUS_LABELS } from '../../../models/tou
 import { EGames, GAME_LABELS } from '../../../models/tournament/enums/games.enum';
 import { AuthService } from '../../../services/auth/auth.service';
 
+import { AuthService } from '../../../services/auth/auth.service';
+
 @Component({
   selector: 'app-tournament-card',
   imports: [
@@ -55,9 +57,7 @@ export class TournamentCardComponent {
     return TOURNAMENT_STATUS_LABELS[this.status];
   }
 
-  constructor(private confirmationService: ConfirmationService,
-    private authService: AuthService
-  ) {}
+  constructor(private confirmationService: ConfirmationService, private authService: AuthService) {}
 
 
   confirmSubscription(event: Event) {
@@ -83,6 +83,9 @@ export class TournamentCardComponent {
         label: 'Sim, Participar'
       },
       accept: () => {
+        console.log('✅ Emitindo evento de inscrição:', { tournamentId: this.tournamentId, userId: this.userId });
+        this.subscription.emit({ tournamentId: this.tournamentId, userId: this.userId });
+
         
       console.log('✅ Emitindo evento de inscrição:', { tournamentId: this.tournamentId, userId: loggedUserId });
 
@@ -90,5 +93,4 @@ export class TournamentCardComponent {
       }
     });
   }
-
 }
