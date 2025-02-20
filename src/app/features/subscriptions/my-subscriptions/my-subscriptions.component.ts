@@ -46,7 +46,6 @@ export class MySubscriptionsComponent implements OnInit {
   loadSubscriptions() {
     if (!this.userId) return;
     this.loading = true;
-
     
     this.subscriptionService.getAllSubscriptionsByUserId(this.userId).subscribe({
       next: (response: any) => {

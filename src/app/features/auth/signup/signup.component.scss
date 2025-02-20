@@ -9,3 +9,15 @@
 :host ::ng-deep .p-password {
     @apply w-full;
 }
+
+:host ::ng-deep .p-carousel-indicator-list, .carousel-next-icon {
+    @apply hidden;
+}
+
+:host ::ng-deep .carousel-next-icon {
+    @apply hidden;
+}
+
+:host ::ng-deep .p-carousel-prev-button {
+    @apply hidden;
+}

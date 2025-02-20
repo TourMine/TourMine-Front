@@ -10,6 +10,7 @@ import { ToastModule } from 'primeng/toast';
 import { EPlataforms, PLATAFORMS_LABELS } from '../../../models/tournament/enums/plataforms.enum';
 import { ETournamentStatus, TOURNAMENT_STATUS_LABELS } from '../../../models/tournament/enums/tournament-status.enum';
 import { EGames, GAME_LABELS } from '../../../models/tournament/enums/games.enum';
+import { AuthService } from '../../../services/auth/auth.service';
 
 import { AuthService } from '../../../services/auth/auth.service';
 
@@ -84,6 +85,7 @@ export class TournamentCardComponent {
       accept: () => {
         console.log('✅ Emitindo evento de inscrição:', { tournamentId: this.tournamentId, userId: this.userId });
         this.subscription.emit({ tournamentId: this.tournamentId, userId: this.userId });
+
         
       console.log('✅ Emitindo evento de inscrição:', { tournamentId: this.tournamentId, userId: loggedUserId });
 

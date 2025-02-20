@@ -63,6 +63,11 @@ export class ListTournamentsComponent implements OnInit {
     console.log(this.userId);
   }
 
+  // getUserId() {
+  //   this.userId = this.authService.getUserId(); 
+  //   console.log('Usuário autenticado:', this.userId);
+  // }
+
   listAllTournaments() {
     this.loading = true;
     this.tournamentService.getAllTournaments().subscribe({
