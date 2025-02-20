@@ -12,8 +12,6 @@ import { ETournamentStatus, TOURNAMENT_STATUS_LABELS } from '../../../models/tou
 import { EGames, GAME_LABELS } from '../../../models/tournament/enums/games.enum';
 import { AuthService } from '../../../services/auth/auth.service';
 
-import { AuthService } from '../../../services/auth/auth.service';
-
 @Component({
   selector: 'app-tournament-card',
   imports: [

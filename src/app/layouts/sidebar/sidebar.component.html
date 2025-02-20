@@ -14,7 +14,10 @@
 
   <div class="sidenav-nav mt-5">
     <ul>
-      <li *ngFor="let item of items" class="sidenav-nav-item" [hidden]="item.routeLink === 'tournaments/create' && role === 'Player'">
+      <li *ngFor="let item of items" 
+    class="sidenav-nav-item" 
+    [hidden]="(item.routeLink === 'tournaments/create' && role === 'Player') || 
+              (item.routeLink === 'my-subscriptions' && role === 'Organizer')">
         <a
           class="sidenav-nav-link flex items-center"
           [ngClass]="isCollapsed ? 'justify-center' : 'justify-start pl-2'"
