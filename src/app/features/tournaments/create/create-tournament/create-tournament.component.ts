@@ -21,6 +21,8 @@ import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { AuthService } from '../../../../services/auth/auth.service';
+
 
 
 @Component({
@@ -100,7 +102,7 @@ export class CreateTournamentComponent {
 
   successMessage: string = '';
 
-  constructor(private TournamentService: TournamentService, private router: Router, private messageService: MessageService) {
+  constructor(private TournamentService: TournamentService, private router: Router, private messageService: MessageService, private authService: AuthService) {
     this.createTournamentForm.get('startDate')?.valueChanges.subscribe((startDate) => {
       if (startDate) {
         this.minEndDate = new Date(startDate);
@@ -113,6 +115,7 @@ export class CreateTournamentComponent {
     this.loading = true;
     if (this.createTournamentForm.valid) {
       const torneio: Tournament = {
+        userId: this.authService.getUserId() ?? "",
         name: this.createTournamentForm.value.name!,
         game: this.createTournamentForm.value.game!,
         plataform: Number(this.createTournamentForm.value.plataform),
