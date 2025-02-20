@@ -7,14 +7,16 @@
   </div>
 
   <div class="flex justify-center items-center w-full pt-5">
-    <div class="text-white font-bold text-2xl">
-      {{ isLeftSidebarCollapsed ? 'T' : 'TourMine' }}
-    </div>
+    @if (!isLeftSidebarCollapsed) {
+      <div class="text-white font-bold text-2xl">TourMine</div>
+    } @else {
+      <div class="text-white font-bold text-2xl">T</div>
+    }
   </div>
 
   <div class="sidenav-nav mt-5">
     <ul>
-      <li *ngFor="let item of items" class="sidenav-nav-item" [hidden]="item.routeLink === 'tournaments/create' && role === 'Player'">
+      <li *ngFor="let item of items; index as i" class="sidenav-nav-item">
         <a
           class="sidenav-nav-link flex items-center"
           [ngClass]="isCollapsed ? 'justify-center' : 'justify-start pl-2'"
@@ -22,13 +24,14 @@
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
         >
-          <div class="relative" *ngIf="item.icon_add; else noIconAdd">
+          @if (item.icon_add) {
+            <div class="relative">
+              <i class="sidenav-link-icon" [class]="item.icon"></i>
+              <i class="absolute -top-1 -right-2 rounded-full bg-white text-black p-0.5 text-xs" [class]="item.icon_add"></i> 
+            </div>
+          } @else {
             <i class="sidenav-link-icon" [class]="item.icon"></i>
-            <i class="absolute -top-1 -right-2 rounded-full bg-white text-black p-0.5 text-xs" [class]="item.icon_add"></i> 
-          </div>
-          <ng-template #noIconAdd>
-            <i class="sidenav-link-icon" [class]="item.icon"></i>
-          </ng-template>
+          }
           <span *ngIf="!isLeftSidebarCollapsed" class="sidenav-link-text">{{ item.label }}</span>
         </a>
       </li>
