@@ -88,6 +88,14 @@ export class AuthService {
     return payload?.userId || null; // Supondo que o token contenha um campo 'userId'
   }
 
+  public getUserEmail(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+  
+    const payload = this.decodeJwt(token);
+    return payload?.unique_name || null; // Supondo que o token contenha um campo 'email'
+  }
+
   public get currentUserValue() {
     return this.currentUserSubject.value;
   }
