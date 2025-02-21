@@ -26,14 +26,19 @@ export class ProfilePageComponent implements OnInit {
   editProfileForm!: FormGroup;
   formChanged: boolean = false;
   userId!: string | null; // ID do usuário logado
-
+  userEmail!: string | null;
+  userRole!: string | null;
 
   constructor(private fb: FormBuilder, private router: Router, private authService: AuthService, private usersService: UsersService) {}
 
   ngOnInit(): void {
-    // Obtém o userId do usuário autenticado via AuthService
     this.userId = this.authService.getUserId();
-    console.log(this.userId);
+    this.userEmail = this.authService.getUserEmail();
+    this.userRole = this.authService.getUserRole();
+  
+    console.log("UserID:", this.userId);
+    console.log("User Email:", this.userEmail);
+    console.log("User Role:", this.userRole);
 
     // Inicializa o formulário
     this.editProfileForm = this.fb.group({
