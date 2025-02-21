@@ -20,7 +20,7 @@ export const routes: Routes = [
         children: [
             { path: 'profile', component: ProfilePageComponent, canActivate: [AuthGuard] },
             { path: 'tournaments/list', component: ListTournamentsComponent, canActivate: [AuthGuard] },
-            { path: 'tournaments/create', component: CreateTournamentComponent, canActivate: [AuthGuard] },
+            { path: 'tournaments/create', component: CreateTournamentComponent, canActivate: [AuthGuard], data: {roles: ['Organizer']} },
             { path: 'tournaments/update/:id', component: UpdateTournamentComponent, canActivate: [AuthGuard]},
             { path: 'my-subscriptions', component: MySubscriptionsComponent, canActivate: [AuthGuard]}
         ]

@@ -20,16 +20,12 @@ export class AuthService {
   login(email: string, password: string) {
     return this.http.post<any>(`${this.apiUrl}/login`, { email, password }).subscribe({
       next: (response) => {
-        // Salva o token no localStorage
         localStorage.setItem('currentUser', JSON.stringify(response));
   
-        // Verifique se o token foi armazenado corretamente no localStorage
         console.log('Token saved in localStorage:', localStorage.getItem('currentUser'));
         
-        // Atualiza o BehaviorSubject imediatamente após salvar o token
         this.currentUserSubject.next(response); 
   
-        // Redireciona o usuário
         this.router.navigate(['/tournaments/list']);
       },
       error: (error) => {
@@ -39,7 +35,6 @@ export class AuthService {
   }
 
   logout() {
-    // Remove o token do localStorage
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
     this.router.navigate(['/user/login']);
@@ -50,14 +45,12 @@ export class AuthService {
     return currentUser && currentUser.token ? currentUser.token : null;
   }
 
-  // Verificar se o token é válido
   isAuthenticated(): boolean {
     const user = this.currentUserValue;
     return user && user.token && this.isTokenValid(user.token);
   }
 
   private isTokenValid(token: string): boolean {
-    // Decodifique o JWT para verificar a validade, ou pode usar uma biblioteca para ajudar
     const payload = this.decodeJwt(token);
     const now = Date.now() / 1000;
     return payload.exp > now;
@@ -85,7 +78,7 @@ export class AuthService {
     if (!token) return null;
   
     const payload = this.decodeJwt(token);
-    return payload?.userId || null; // Supondo que o token contenha um campo 'userId'
+    return payload?.userId || null; 
   }
 
   public getUserEmail(): string | null {
@@ -93,7 +86,7 @@ export class AuthService {
     if (!token) return null;
   
     const payload = this.decodeJwt(token);
-    return payload?.unique_name || null; // Supondo que o token contenha um campo 'email'
+    return payload?.unique_name || null; 
   }
 
   public get currentUserValue() {
