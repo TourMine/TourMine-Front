@@ -33,6 +33,11 @@
                             O campo Nome é obrigatório.
                         </small>
                     }
+                    @if (createTournamentForm.get('name')?.hasError('maxLength')) {
+                        <small class="text-red-500">
+                            O campo Nome não pode ter mais de 50 caracteres.
+                        </small>
+                    }
                 </div>
     
                 <div class="flex flex-col gap-2 w-full">

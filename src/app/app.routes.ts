@@ -8,6 +8,8 @@ import { SignupComponent } from './features/auth/signup/signup.component';
 import { ProfilePageComponent } from './features/profile/profile-page/profile-page.component';
 import { MySubscriptionsComponent } from './features/subscriptions/my-subscriptions/my-subscriptions.component';
 import { AuthGuard } from './services/auth/auth.guard';
+import { TournamentDetailComponent } from './features/tournaments/tournament-detail/tournament-detail.component';
+import { MyTournamentsComponent } from './features/tournaments/my-tournaments/my-tournaments.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -18,11 +20,13 @@ export const routes: Routes = [
         path: '',
         component: HomeComponent,
         children: [
-            { path: 'profile', component: ProfilePageComponent, canActivate: [AuthGuard] },
-            { path: 'tournaments/list', component: ListTournamentsComponent, canActivate: [AuthGuard] },
-            { path: 'tournaments/create', component: CreateTournamentComponent, canActivate: [AuthGuard] },
-            { path: 'tournaments/update/:id', component: UpdateTournamentComponent, canActivate: [AuthGuard]},
-            { path: 'my-subscriptions', component: MySubscriptionsComponent, canActivate: [AuthGuard]}
+            { path: 'profile', component: ProfilePageComponent },
+            { path: 'tournaments/list', component: ListTournamentsComponent },
+            { path: 'tournaments/create', component: CreateTournamentComponent },
+            { path: 'tournaments/id', component: TournamentDetailComponent },
+            { path: 'tournaments/update/:id', component: UpdateTournamentComponent },
+            { path: 'my-tournaments', component: MyTournamentsComponent },
+            { path: 'my-subscriptions', component: MySubscriptionsComponent}
         ]
     },
 

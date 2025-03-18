@@ -42,6 +42,11 @@ export class SidebarComponent {
       icon: 'fa-solid fa-list-ul',
       label: 'Minhas Inscrições',
     },
+    {
+      routeLink: 'my-tournaments',
+      icon: 'fa-solid fa-list-ul',
+      label: 'Meus Torneios',
+    },
   ];
 
   constructor(private authService: AuthService) {

@@ -1,0 +1,122 @@
+<app-card-main>
+    <div class="flex justify-around items-center">
+      <div class="flex items-center gap-5">
+        <h1 class="sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold py-5 md:py-10 px-5">Torneio Paraibano de Valorant Ferro e Bronze</h1>
+      </div>
+    </div>
+  
+    <div class="flex flex-col gap-4 justify-center items-center p-5 pb-10">
+
+        <div class="relative w-1/2 h-1/2">
+            <img class="w-full h-full object-cover rounded-lg" src="../../../../assets/images/csgo.jpg" alt="">
+
+            <div class="absolute -top-3 -right-10">
+                <app-tournament-status-button [status]="tournamentStatus"></app-tournament-status-button>
+            </div>
+        
+            @if (tournamentStatus == 2) {
+                <div class="absolute bottom-5 left-1/2 -translate-x-1/2 w-3/4">
+                    <p-button 
+                      label="Participar"  
+                      styleClass="w-full border-primary animate-pulseBorder" 
+                    />
+                </div>
+            }
+        </div>
+
+        <p-panel header="Descrição" styleClass="border-none" [toggleable]="true">
+            <p class="m-0">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque ducimus, possimus animi tempora, deserunt, ut eligendi suscipit totam perspiciatis sed nisi quos adipisci ipsa aliquam voluptates voluptas! Corrupti, ipsam quis!
+            </p>
+        </p-panel>
+        
+        <div class="w-full">
+            <p-tabs value="0">
+                <p-tablist>
+                    <p-tab value="0">Detalhes</p-tab>
+                    <p-tab value="1">Regras</p-tab>
+                    <p-tab value="2">Premiações</p-tab>
+                    <p-tab value="3">Contato</p-tab>
+                </p-tablist>
+                <p-tabpanels>
+                    <p-tabpanel value="0">
+                        <div class="m-0">
+                            <p class="flex flex-col gap-2">
+                                <span class="text-sm text-gray-500">Jogo & Plataforma</span>
+                                <span>VALORANT</span>
+                                <span class="text-sm">PC</span>
+                            </p>
+                            <p-divider />
+                            <p class="flex flex-col gap-2">
+                                <span class="text-sm text-gray-500">Data e hora de Início</span>
+                                <p-button 
+                                    styleClass="cursor-default" 
+                                    label="15/11/2024 15:00"
+                                    icon="pi pi-calendar-clock" 
+                                    [rounded]="true" 
+                                    severity="info" 
+                                    size="small" 
+                                />
+                            </p>
+                            <p-divider />
+                            <p class="flex flex-col gap-2">
+                                <span class="text-sm text-gray-500">Data e hora de Termíno</span>
+                                <p-button 
+                                    styleClass="cursor-default" 
+                                    label="17/11/2024 19:00"
+                                    icon="pi pi-calendar-clock" 
+                                    [rounded]="true" 
+                                    severity="info" 
+                                    size="small" 
+                                />
+                            </p>
+                            <p-divider />
+                            <p class="flex flex-col gap-2">
+                                <span class="text-sm text-gray-500">Tipo Inscrição</span>
+                                <span>Grátis</span>
+                            </p>
+                        </div>
+                    </p-tabpanel>
+                    <p-tabpanel value="1">
+                        <div class="m-0">
+                            <p class="flex flex-col gap-2">
+                                <span class="text-sm text-gray-500">Formato</span>
+                                <span>5v5</span>
+                            </p>
+                            <p-divider />
+                            <p class="flex flex-col gap-2">
+                                <span class="text-sm text-gray-500">Tipo de Equipe</span>
+                                <span>SOLO</span>
+                            </p>
+                            <p-divider />
+                            <p class="flex flex-col gap-2">
+                                <span class="text-sm text-gray-500">Máximo de Times / Jogadores</span>
+                                <span>16</span>
+                            </p>
+                        </div>
+                    </p-tabpanel>
+                    <p-tabpanel value="2">
+                        <div class="m-0">
+                            <p class="flex flex-col gap-2">
+                                <span class="text-sm text-gray-500">Prêmio</span>
+                                <span>R$ 1.000</span>
+                                <span class="text-sm">Não há prêmios listados no momento.</span>
+                            </p>
+                        </div>
+                    </p-tabpanel>
+                    <p-tabpanel value="3">
+                        <div class="m-0">
+                            <p class="flex flex-col gap-2">
+                                <span class="text-sm text-gray-500">Organizador</span>
+                                <span>organizador.com</span>
+                                <span class="text-sm">Email do organizador</span>
+                            </p>
+                        </div>
+                    </p-tabpanel>
+                </p-tabpanels>
+            </p-tabs>
+        </div>
+
+    </div>
+  
+</app-card-main>

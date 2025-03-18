@@ -1,3 +1,5 @@
+@import "../../../styles.scss";
+
 .sidenav {
     background: #1D1D1D;
     transition: all 0.5s ease;
@@ -52,7 +54,7 @@
   }
   .sidenav-nav .sidenav-nav-item .sidenav-nav-link {
     height: 3rem;
-    color: #f3f3f3;
+    color: #fff;
     text-decoration: none;
     border-radius: 0.625rem;
     transition: all 0.3s ease;
@@ -67,12 +69,12 @@
     margin-left: 1.5rem;
   }
   .sidenav-nav .sidenav-nav-item:hover .sidenav-nav-link {
-    background-color: #fff;
+    background-color: $primary-color;
     color: #000;
   }
   
   .active {
-    background-color: #fff;
+    background-color: $primary-color;
   }
   .active .sidenav-link-icon,
   .active .sidenav-link-text {

@@ -88,7 +88,7 @@ export class CreateTournamentComponent {
     }))
 
   createTournamentForm = new FormGroup({
-    name: new FormControl(null, Validators.required),
+    name: new FormControl(null, [Validators.required, Validators.maxLength(50)]),
     game: new FormControl(null, Validators.required),
     plataform: new FormControl(null, Validators.required),
     maxTeams: new FormControl(2, [Validators.required, Validators.min(2)]),
