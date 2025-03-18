@@ -1,0 +1,6 @@
+<ng-container [ngSwitch]="status">
+    <p-button *ngSwitchCase="1" label="Planejamento" icon="pi pi-cog" styleClass="cursor-default font-semibold" [rounded]="true" severity="help" size="small"></p-button>
+    <p-button *ngSwitchCase="2" label="Aberto" icon="pi pi-ticket" styleClass="cursor-default font-semibold" [rounded]="true" severity="success" size="small"></p-button>
+    <p-button *ngSwitchCase="3" label="Em andamento" icon="pi pi-clock" styleClass="cursor-default font-semibold" [rounded]="true" severity="info" size="small"></p-button>
+    <p-button *ngSwitchDefault label="Finalizado" icon="pi pi-check-circle" styleClass="cursor-default font-semibold" [rounded]="true" severity="danger" size="small"></p-button>
+</ng-container>

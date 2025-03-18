@@ -1,0 +1,43 @@
+<app-card-main>
+    <div class="flex justify-around items-center mb-2">
+        <div>
+            <h1 class="uppercase text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold py-5 md:py-10">Meus Torneios</h1>
+        </div>
+    </div>
+
+    <div class="p-5">
+        <div class="card">
+            <p-table [value]="tournaments" [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '50rem' }" [rowsPerPageOptions]="[5, 10, 20]">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 15%">Nome</th>
+                        <th style="width: 10%">Jogo</th>
+                        <th style="width: 10%">Plataforma</th>
+                        <th style="width: 10%">Data de Início</th>
+                        <th style="width: 10%">Data de Término</th>
+                        <th style="width: 10%">Status</th>
+                        <th style="width: 10%">Ações</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-tournament>
+                    <tr>
+                        <td>{{ tournament.name }}</td>
+                        <td>{{ tournament.game }}</td>
+                        <td>{{ tournament.plataform }}</td>
+                        <td>{{ tournament.startDate | date: 'dd/MM/yyyy HH:mm' }}</td>
+                        <td>{{ tournament.endDate | date: 'dd/MM/yyyy HH:mm' }}</td>
+                        <td>{{ tournament.status }}</td>
+                        <td>
+                            <p-button icon="pi pi-search" [rounded]="true" [text]="true" severity="secondary" (click)="showDetails()" />
+                            <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="warn" (click)="editTournament()" />
+                            <p-button icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" [outlined]="true" (click)="confirmDelete($event, tournament); $event.stopPropagation();" />
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+
+    <p-toast />
+    <p-confirmdialog />
+</app-card-main>
