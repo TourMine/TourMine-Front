@@ -48,8 +48,6 @@ export class MySubscriptionsComponent implements OnInit {
 
   loading: boolean = false;
 
-  tournamentStatus: number = 1;
-
   first: number = 0;
   rows: number = 5; // Itens por página
   totalRecords: number = 0;
@@ -66,10 +64,6 @@ export class MySubscriptionsComponent implements OnInit {
   getSubscriptionTypeLabel(subscription: number): string {
     return SUBSCRIPTION_TYPE_LABELS[subscription as ESubscriptionType] || 'Desconhecida';
   }
-
-  GAME_LABELS = GAME_LABELS;
-  PLATAFORMS_LABELS = PLATAFORMS_LABELS;
-  TOURNAMENT_STATUS_LABELS = TOURNAMENT_STATUS_LABELS;
 
   constructor(
     private subscriptionService: SubscriptionService,

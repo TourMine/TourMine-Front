@@ -27,22 +27,40 @@
     <ng-template #footer>
         <div class="flex flex-col md:flex-row gap-4 mt-5">
             @if (isOrganizer) {
-              <p-button 
-                label="Editar" 
-                severity="secondary"
-                class="w-full" 
-                [outlined]="true" 
-                styleClass="w-full"
-                (click)="update.emit(); $event.preventDefault(); $event.stopPropagation()"
-              />
-              <p-button 
-                label="Excluir" 
-                severity="primary"
-                class="w-full" 
-                [outlined]="true" 
-                styleClass="w-full"
-                (click)="delete.emit(); $event.preventDefault(); $event.stopPropagation()"
-              />
+              @if (status == 1 || status == 2) {
+                @if (isCreator) {
+                  <p-button 
+                    label="Editar" 
+                    severity="secondary"
+                    class="w-full" 
+                    [outlined]="true" 
+                    styleClass="w-full"
+                    (click)="update.emit(); $event.preventDefault(); $event.stopPropagation()"
+                  />
+                  <p-button 
+                    label="Cancelar" 
+                    severity="primary"
+                    class="w-full" 
+                    [outlined]="true" 
+                    styleClass="w-full"
+                    (click)="delete.emit(); $event.preventDefault(); $event.stopPropagation()"
+                  />
+                }
+              } @else if (status == 3) {
+                <p-button 
+                  label="Em andamento" 
+                  class="w-full" 
+                  styleClass="w-full" 
+                  [disabled]="true"
+                />
+              } @else {
+                <p-button 
+                  label="Encerrado" 
+                  class="w-full" 
+                  styleClass="w-full" 
+                  [disabled]="true"
+                />
+              }
             } @else {
                 @if (status == 1 || status == 2) {
                   @if (isSubscribed) {
