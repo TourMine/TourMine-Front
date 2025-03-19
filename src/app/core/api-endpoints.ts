@@ -14,6 +14,7 @@ export const API_ENDPOINTS = {
 
   // User
   registerUser: `${environment.apiUrl}/auth/register`,
-  updateUser: (id: string) => `${environment.apiUrl}/user/v1/${id}`
+  updateUser: (id: string) => `${environment.apiUrl}/user/v1/${id}`,
+  getUserById: (id: String) => `http://localhost:5024/users/v1/${id}`
 
 };

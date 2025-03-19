@@ -12,6 +12,8 @@ import { ETournamentStatus, TOURNAMENT_STATUS_LABELS } from '../../../models/tou
 import { EGames, GAME_LABELS } from '../../../models/tournament/enums/games.enum';
 import { AuthService } from '../../../services/auth/auth.service';
 import { SubscriptionService } from '../../../services/subscription/subscription.service';
+import { RouterModule } from '@angular/router';
+import { TournamentStatusButtonComponent } from '../tournament-status-button/tournament-status-button.component';
 
 @Component({
   selector: 'app-tournament-card',
@@ -20,7 +22,9 @@ import { SubscriptionService } from '../../../services/subscription/subscription
     CardModule,
     ButtonModule,
     ConfirmDialogModule,
-    ToastModule
+    ToastModule,
+    RouterModule,
+    TournamentStatusButtonComponent
   ],
   templateUrl: './tournament-card.component.html',
   styleUrl: './tournament-card.component.scss',
@@ -41,9 +45,9 @@ export class TournamentCardComponent implements OnInit {
   @Output() details = new EventEmitter<void>();
   @Output() subscription = new EventEmitter<{ tournamentId: string; userId: string }>();
 
-  @Input() isOrganizer: boolean = false;
-
-  isSubscribed: boolean = true;
+  isOrganizer: boolean = false;
+  currentUserId!: string | null;
+  isSubscribed: boolean = false;
 
   get gameLabel(): string {
     return GAME_LABELS[this.game];
@@ -63,22 +67,47 @@ export class TournamentCardComponent implements OnInit {
     private subscriptionService: SubscriptionService) {}
 
   ngOnInit(): void {
+    this.currentUserId = this.authService.getUserId();
+    this.checkIsOrganizer()
+    console.log('🔑 ID do usuário logado:', this.currentUserId);
     this.checkUserSubscription();
   }
 
+  checkIsOrganizer() {
+    const role = this.authService.getUserRole();
+    if(role == "Player") {
+      return this.isOrganizer = false
+    } else {
+      return this.isOrganizer = true
+    }
+  }
+
   checkUserSubscription() {
-    if (!this.userId) {
+    if (!this.currentUserId) {
       return;
     }
 
-    this.subscriptionService.getAllSubscriptionsByUserId(this.userId).subscribe(
-      (subscriptions) => {
-        this.isSubscribed = subscriptions.some((sub: any) => sub.tournamentId === this.tournamentId);
+    console.log("UserId: " + this.currentUserId)
+
+    this.subscriptionService.getAllSubscriptionsByUserId(this.currentUserId).subscribe({
+      next: (response) => {
+        console.log('🔍 Resposta da API de subscription:', response);
+    
+        if (!Array.isArray(response.items)) {
+          console.error('❌ Erro: response.items não é um array!', response);
+          return;
+        }
+    
+        setTimeout(() => {
+          this.isSubscribed = response.items.some((sub: any) => sub.tournamentId === this.tournamentId);
+          console.log('🛠️ isSubscribed atualizado:', this.isSubscribed);
+        }, 500);
       },
-      (error) => {
+      error: (error) => {
         console.error('Erro ao buscar inscrições do usuário:', error);
       }
-    );
+    });
+    
   }
 
   confirmSubscription(event: Event) {

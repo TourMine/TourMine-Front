@@ -12,6 +12,12 @@ import { EPlataforms, PLATAFORMS_LABELS } from '../../../models/tournament/enums
 import { ESubscriptionType, SUBSCRIPTION_TYPE_LABELS } from '../../../models/tournament/enums/subscription-type.enum';
 import { ETournamentStatus, TOURNAMENT_STATUS_LABELS } from '../../../models/tournament/enums/tournament-status.enum';
 import { EParticipantsType, PARTICIPANTS_TYPE_LABELS } from '../../../models/tournament/enums/participants-type.enum';
+import { TournamentService } from '../../../services/tournament/tournament-service.service';
+import { ActivatedRoute } from '@angular/router';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { UsersService } from '../../../services/users/users.service';
 
 @Component({
   selector: 'app-tournament-detail',
@@ -22,14 +28,27 @@ import { EParticipantsType, PARTICIPANTS_TYPE_LABELS } from '../../../models/tou
     PanelModule,
     DividerModule,
     ButtonModule,
-    TournamentStatusButtonComponent
+    TournamentStatusButtonComponent,
+    ProgressSpinnerModule,
+    ToastModule
   ],
   templateUrl: './tournament-detail.component.html',
-  styleUrl: './tournament-detail.component.scss'
+  styleUrl: './tournament-detail.component.scss',
+  providers: [ConfirmationService, MessageService]
 })
 export class TournamentDetailComponent implements OnInit {
   tournament!: Tournament;
-  tournamentStatus: number = 2
+  organizerEmail: string | null = null;
+  loading: boolean = true;
+  error: string | null = null;
+
+  gameImages: { [key: string]: string } = {
+    'FIFA': 'assets/images/fifa.jpg',
+    'CSGO2': 'assets/images/csgo.jpg',
+    'LEAGUE_OF_LEGENDS': 'assets/images/lol.jpg',
+    'VALORANT': 'assets/images/valorant.jpg',
+    'FORTNITE': 'assets/images/fortnite.jpg',
+  };
 
   getGameLabel(game: string): string {
     return GAME_LABELS[game as EGames] || 'Desconhecido';
@@ -51,20 +70,47 @@ export class TournamentDetailComponent implements OnInit {
     return PARTICIPANTS_TYPE_LABELS[participant_type as EParticipantsType || 'Desconhecido']
   }
 
+  constructor(
+    private route: ActivatedRoute,
+    private tournamentService: TournamentService,
+    private usersService: UsersService,
+    private messageService: MessageService) {}
+
   ngOnInit(): void {
-    this.tournament = {
-      userId: '1',
-      name: 'Campeonato Nacional de CS:GO',
-      game: 'CSGO',
-      plataform: 1, // Suponha que 1 representa PC
-      maxTeams: 16,
-      teamsType: 5, // Suponha que seja times de 5 jogadores
-      startDate: '2024-09-10T18:00:00Z',
-      endDate: '2024-09-20T22:00:00Z',
-      prize: 'R$ 50.000',
-      subscriptionType: 1, // Suponha que 1 seja inscrição gratuita
-      status: 2, // Suponha que 2 seja "Inscrições Abertas"
-      description: 'O maior torneio nacional de CS:GO com os melhores times do país!',
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.fetchTournament(id);
+    } else {
+      this.error = 'ID do torneio não encontrado!';
+      this.loading = false;
     }
   }
+
+  fetchTournament(id: string): void {
+    this.tournamentService.getTournamentById(id).subscribe({
+      next: (data) => {
+        this.tournament = data;
+        this.fetchOrganizerEmail(data.userId);
+        this.loading = false;
+      },
+      error: (err) => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Erro ao buscar torneio: ' + err });
+        this.error = 'Erro ao carregar torneio.';
+        this.loading = false;
+      }
+    });
+  }
+
+  fetchOrganizerEmail(userId: string): void {
+    this.usersService.getUserById(userId).subscribe({
+      next: (user: any) => {
+        this.organizerEmail = user.email;
+      },
+      error: (err) => {
+        this.error = 'Erro ao carregar informações do organizador.';
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Erro ao buscar organizador:' + err });
+      }
+    });
+  }
+
 }

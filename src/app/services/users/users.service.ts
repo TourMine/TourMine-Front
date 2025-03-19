@@ -18,4 +18,8 @@ export class UsersService {
     return this.http.put<any>(API_ENDPOINTS.updateUser(id), userData);
   }
 
+  getUserById(id: string): Observable<any> {
+    return this.http.get<any>(API_ENDPOINTS.getUserById(id));
+  }
+
 }

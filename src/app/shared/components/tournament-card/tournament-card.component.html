@@ -1,20 +1,31 @@
 <p-toast />
 <p-confirmdialog />
 
-<a 
-  (click)="details.emit()"
+<div 
+  class="cursor-pointer hover-effect"
+  [routerLink]="'/tournaments/' + tournamentId"
 >
   <p-card [style]="{ overflow: 'hidden' }">
     <ng-template #header>
       <img [src]="image" alt="{{ name }}" class="w-full h-40 object-cover rounded-lg">
     </ng-template>
-    <ng-template #title>{{ name }}</ng-template>
-    <ng-template #subtitle>{{ gameLabel }} - {{ plataformLabel }}</ng-template>
-    <p>Máx. Times: {{ maxTeams }}</p>
-    <p>Data Início: {{ startDate | date }}</p>
-    <p>Status: {{ statusLabel }}</p>
+    <ng-template #title>
+      <div class="truncate-text">
+        {{ name }}
+      </div>
+    </ng-template>
+    <ng-template #subtitle>
+      <div class="truncate-text">
+        {{ gameLabel }} - {{ plataformLabel }}
+      </div>
+    </ng-template>
+    <div class="flex flex-col justify-center gap-1">
+      <p>Máx. Times: {{ maxTeams }}</p>
+      <p>Data Início: {{ startDate | date }}</p>
+      <p>Status: <app-tournament-status-button [status]="status" /></p>
+    </div>
     <ng-template #footer>
-        <div class="flex flex-col md:flex-row gap-4 mt-2">
+        <div class="flex flex-col md:flex-row gap-4 mt-5">
             @if (isOrganizer) {
               <p-button 
                 label="Editar" 
@@ -22,7 +33,7 @@
                 class="w-full" 
                 [outlined]="true" 
                 styleClass="w-full"
-                (click)="update.emit()"
+                (click)="update.emit(); $event.preventDefault(); $event.stopPropagation()"
               />
               <p-button 
                 label="Excluir" 
@@ -30,16 +41,20 @@
                 class="w-full" 
                 [outlined]="true" 
                 styleClass="w-full"
-                (click)="delete.emit()" 
+                (click)="delete.emit(); $event.preventDefault(); $event.stopPropagation()"
               />
             } @else {
                 @if (status == 1 || status == 2) {
-                  <p-button 
-                    label="Participar" 
-                    class="w-full" 
-                    styleClass="w-full" 
-                    (click)="confirmSubscription($event); $event.preventDefault()"
-                  />
+                  @if (isSubscribed) {
+                    <p-button label="Já Inscrito" class="w-full" styleClass="w-full" [disabled]="true" />
+                  } @else {
+                    <p-button 
+                      label="Participar" 
+                      class="w-full" 
+                      styleClass="w-full" 
+                      (click)="confirmSubscription($event); $event.preventDefault(); $event.stopPropagation()"
+                    />
+                  }
                 } @else if (status == 3) {
                   <p-button 
                     label="Em andamento" 
@@ -59,4 +74,4 @@
         </div>
     </ng-template>
   </p-card>
-</a>
+</div>

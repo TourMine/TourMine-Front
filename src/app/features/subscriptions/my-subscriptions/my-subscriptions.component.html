@@ -21,7 +21,7 @@
                     <ng-template #subtitle>
                         <p>
                             <strong>Data e hora da Inscrição:</strong> 
-                            {{ sub.subscriptionDate | date:'dd/MM/yyyy HH:mm' }}
+                            {{ sub.subscrpitionDate | date:'dd/MM/yyyy HH:mm' }}
                         </p>
                     </ng-template>
                     <ng-template #content>
@@ -61,7 +61,7 @@
                                     <p-button (click)="confirmCancellation($event, sub); $event.stopPropagation();" label="Cancelar" severity="danger" [outlined]="true" />
                                 </div>
                             }
-                            <a [routerLink]="['/tournaments/id']" class="flex justify-end items-center no-underline cursor-pointer" >
+                            <a [routerLink]="'/tournaments/' + sub.tournament?.id" class="flex justify-end items-center no-underline cursor-pointer" >
                                 <span class="text-blue-500 font-semibold">Ver detalhes</span>
                                 <i class="pi pi-arrow-right ml-2 text-blue-500"></i>
                             </a>
