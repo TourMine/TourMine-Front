@@ -46,6 +46,7 @@ export class TournamentCardComponent implements OnInit {
   @Output() subscription = new EventEmitter<{ tournamentId: string; userId: string }>();
 
   isOrganizer: boolean = false;
+  isCreator: boolean = false;
   currentUserId!: string | null;
   isSubscribed: boolean = false;
 
@@ -69,6 +70,7 @@ export class TournamentCardComponent implements OnInit {
   ngOnInit(): void {
     this.currentUserId = this.authService.getUserId();
     this.checkIsOrganizer()
+    this.checkIsTheCreator()
     console.log('🔑 ID do usuário logado:', this.currentUserId);
     this.checkUserSubscription();
   }
@@ -79,6 +81,14 @@ export class TournamentCardComponent implements OnInit {
       return this.isOrganizer = false
     } else {
       return this.isOrganizer = true
+    }
+  }
+
+  checkIsTheCreator() {
+    if(this.currentUserId == this.userId) {
+      this.isCreator = true;
+    } else {
+      this.isCreator = false;
     }
   }
 

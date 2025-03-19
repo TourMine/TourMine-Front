@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CardMainComponent } from '../../../shared/components/card-main/card-main.component';
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
@@ -12,6 +12,9 @@ import { EGames, GAME_LABELS } from '../../../models/tournament/enums/games.enum
 import { EPlataforms, PLATAFORMS_LABELS } from '../../../models/tournament/enums/plataforms.enum';
 import { ESubscriptionType, SUBSCRIPTION_TYPE_LABELS } from '../../../models/tournament/enums/subscription-type.enum';
 import { ETournamentStatus, TOURNAMENT_STATUS_LABELS } from '../../../models/tournament/enums/tournament-status.enum';
+import { TournamentService } from '../../../services/tournament/tournament-service.service';
+import { AuthService } from '../../../services/auth/auth.service';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 
 @Component({
@@ -22,15 +25,20 @@ import { ETournamentStatus, TOURNAMENT_STATUS_LABELS } from '../../../models/tou
     TableModule,
     ButtonModule,
     ConfirmDialog,
-    ToastModule
+    ToastModule,
+    ProgressSpinnerModule
   ],
   templateUrl: './my-tournaments.component.html',
   styleUrl: './my-tournaments.component.scss',
   providers: [ConfirmationService, MessageService]
 })
-export class MyTournamentsComponent {
-  tournaments: Tournament[] = [];
+export class MyTournamentsComponent implements OnInit {
+  tournaments: any[] = [];
+  currentUserId: string | null = null;
+
   selectedTournament: Tournament | null = null;
+
+  loading: boolean = false;
 
   getGameLabel(game: string): string {
     return GAME_LABELS[game as EGames] || 'Desconhecido';
@@ -48,299 +56,51 @@ export class MyTournamentsComponent {
     return TOURNAMENT_STATUS_LABELS[status as ETournamentStatus || 'Desconhecido'];
   }
 
-  constructor(private router: Router, private confirmationService: ConfirmationService, private messageService: MessageService) { }
+  constructor(
+    private tournamentService: TournamentService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService, 
+    private authService: AuthService,
+    private router: Router) {}
 
-  ngOnInit(): void {
-    this.tournaments = [
-      {
-        userId: '123',
-        name: 'Torneio de VALORANT #1',
-        game: 'VALORANT',
-        plataform: 1, // Exemplo de plataforma (PC)
-        maxTeams: 16,
-        teamsType: 1, // Exemplo de tipo de equipe (Solo)
-        startDate: '2024-11-15T18:00:00Z',
-        endDate: '2024-11-17T22:00:00Z',
-        prize: 'R$ 1.000',
-        subscriptionType: 1, // Exemplo de tipo de inscrição (Grátis)
-        status: 2, // Exemplo de status (Aberto)
-        description: 'Primeiro torneio de VALORANT da comunidade.'
-      },
-      {
-        userId: '456',
-        name: 'Campeonato de LEAGUE_OF_LEGENDS',
-        game: 'LEAGUE_OF_LEGENDS',
-        plataform: 1, // Exemplo de plataforma (PC)
-        maxTeams: 8,
-        teamsType: 2, // Exemplo de tipo de equipe (Equipe)
-        startDate: '2024-12-20T19:30:00Z',
-        endDate: '2024-12-23T23:00:00Z',
-        prize: 'R$ 2.000',
-        subscriptionType: 2, // Exemplo de tipo de inscrição (Paga)
-        status: 3, // Exemplo de status (Em andamento)
-        description: 'Campeonato competitivo de LoL.'
-      },
-      {
-        userId: '123',
-        name: 'Torneio de VALORANT #1',
-        game: 'VALORANT',
-        plataform: 1, // Exemplo de plataforma (PC)
-        maxTeams: 16,
-        teamsType: 1, // Exemplo de tipo de equipe (Solo)
-        startDate: '2024-11-15T18:00:00Z',
-        endDate: '2024-11-17T22:00:00Z',
-        prize: 'R$ 1.000',
-        subscriptionType: 1, // Exemplo de tipo de inscrição (Grátis)
-        status: 2, // Exemplo de status (Aberto)
-        description: 'Primeiro torneio de VALORANT da comunidade.'
-      },
-      {
-        userId: '456',
-        name: 'Campeonato de LEAGUE_OF_LEGENDS',
-        game: 'LEAGUE_OF_LEGENDS',
-        plataform: 1, // Exemplo de plataforma (PC)
-        maxTeams: 8,
-        teamsType: 2, // Exemplo de tipo de equipe (Equipe)
-        startDate: '2024-12-20T19:30:00Z',
-        endDate: '2024-12-23T23:00:00Z',
-        prize: 'R$ 2.000',
-        subscriptionType: 2, // Exemplo de tipo de inscrição (Paga)
-        status: 3, // Exemplo de status (Em andamento)
-        description: 'Campeonato competitivo de LoL.'
-      },
-      {
-        userId: '123',
-        name: 'Torneio de VALORANT #1',
-        game: 'VALORANT',
-        plataform: 1, // Exemplo de plataforma (PC)
-        maxTeams: 16,
-        teamsType: 1, // Exemplo de tipo de equipe (Solo)
-        startDate: '2024-11-15T18:00:00Z',
-        endDate: '2024-11-17T22:00:00Z',
-        prize: 'R$ 1.000',
-        subscriptionType: 1, // Exemplo de tipo de inscrição (Grátis)
-        status: 2, // Exemplo de status (Aberto)
-        description: 'Primeiro torneio de VALORANT da comunidade.'
-      },
-      {
-        userId: '456',
-        name: 'Campeonato de LEAGUE_OF_LEGENDS',
-        game: 'LEAGUE_OF_LEGENDS',
-        plataform: 1, // Exemplo de plataforma (PC)
-        maxTeams: 8,
-        teamsType: 2, // Exemplo de tipo de equipe (Equipe)
-        startDate: '2024-12-20T19:30:00Z',
-        endDate: '2024-12-23T23:00:00Z',
-        prize: 'R$ 2.000',
-        subscriptionType: 2, // Exemplo de tipo de inscrição (Paga)
-        status: 3, // Exemplo de status (Em andamento)
-        description: 'Campeonato competitivo de LoL.'
-      },
-      {
-        userId: '123',
-        name: 'Torneio de VALORANT #1',
-        game: 'VALORANT',
-        plataform: 1, // Exemplo de plataforma (PC)
-        maxTeams: 16,
-        teamsType: 1, // Exemplo de tipo de equipe (Solo)
-        startDate: '2024-11-15T18:00:00Z',
-        endDate: '2024-11-17T22:00:00Z',
-        prize: 'R$ 1.000',
-        subscriptionType: 1, // Exemplo de tipo de inscrição (Grátis)
-        status: 2, // Exemplo de status (Aberto)
-        description: 'Primeiro torneio de VALORANT da comunidade.'
-      },
-      {
-        userId: '456',
-        name: 'Campeonato de LEAGUE_OF_LEGENDS',
-        game: 'LEAGUE_OF_LEGENDS',
-        plataform: 1, // Exemplo de plataforma (PC)
-        maxTeams: 8,
-        teamsType: 2, // Exemplo de tipo de equipe (Equipe)
-        startDate: '2024-12-20T19:30:00Z',
-        endDate: '2024-12-23T23:00:00Z',
-        prize: 'R$ 2.000',
-        subscriptionType: 2, // Exemplo de tipo de inscrição (Paga)
-        status: 3, // Exemplo de status (Em andamento)
-        description: 'Campeonato competitivo de LoL.'
-      },
-      {
-        userId: '123',
-        name: 'Torneio de VALORANT #1',
-        game: 'VALORANT',
-        plataform: 1, // Exemplo de plataforma (PC)
-        maxTeams: 16,
-        teamsType: 1, // Exemplo de tipo de equipe (Solo)
-        startDate: '2024-11-15T18:00:00Z',
-        endDate: '2024-11-17T22:00:00Z',
-        prize: 'R$ 1.000',
-        subscriptionType: 1, // Exemplo de tipo de inscrição (Grátis)
-        status: 2, // Exemplo de status (Aberto)
-        description: 'Primeiro torneio de VALORANT da comunidade.'
-      },
-      {
-        userId: '456',
-        name: 'Campeonato de LEAGUE_OF_LEGENDS',
-        game: 'LEAGUE_OF_LEGENDS',
-        plataform: 1, // Exemplo de plataforma (PC)
-        maxTeams: 8,
-        teamsType: 2, // Exemplo de tipo de equipe (Equipe)
-        startDate: '2024-12-20T19:30:00Z',
-        endDate: '2024-12-23T23:00:00Z',
-        prize: 'R$ 2.000',
-        subscriptionType: 2, // Exemplo de tipo de inscrição (Paga)
-        status: 3, // Exemplo de status (Em andamento)
-        description: 'Campeonato competitivo de LoL.'
-      },
-      {
-        userId: '123',
-        name: 'Torneio de VALORANT #1',
-        game: 'VALORANT',
-        plataform: 1, // Exemplo de plataforma (PC)
-        maxTeams: 16,
-        teamsType: 1, // Exemplo de tipo de equipe (Solo)
-        startDate: '2024-11-15T18:00:00Z',
-        endDate: '2024-11-17T22:00:00Z',
-        prize: 'R$ 1.000',
-        subscriptionType: 1, // Exemplo de tipo de inscrição (Grátis)
-        status: 2, // Exemplo de status (Aberto)
-        description: 'Primeiro torneio de VALORANT da comunidade.'
-      },
-      {
-        userId: '456',
-        name: 'Campeonato de LEAGUE_OF_LEGENDS',
-        game: 'LEAGUE_OF_LEGENDS',
-        plataform: 1, // Exemplo de plataforma (PC)
-        maxTeams: 8,
-        teamsType: 2, // Exemplo de tipo de equipe (Equipe)
-        startDate: '2024-12-20T19:30:00Z',
-        endDate: '2024-12-23T23:00:00Z',
-        prize: 'R$ 2.000',
-        subscriptionType: 2, // Exemplo de tipo de inscrição (Paga)
-        status: 3, // Exemplo de status (Em andamento)
-        description: 'Campeonato competitivo de LoL.'
-      },
-      {
-        userId: '123',
-        name: 'Torneio de VALORANT #1',
-        game: 'VALORANT',
-        plataform: 1, // Exemplo de plataforma (PC)
-        maxTeams: 16,
-        teamsType: 1, // Exemplo de tipo de equipe (Solo)
-        startDate: '2024-11-15T18:00:00Z',
-        endDate: '2024-11-17T22:00:00Z',
-        prize: 'R$ 1.000',
-        subscriptionType: 1, // Exemplo de tipo de inscrição (Grátis)
-        status: 2, // Exemplo de status (Aberto)
-        description: 'Primeiro torneio de VALORANT da comunidade.'
-      },
-      {
-        userId: '456',
-        name: 'Campeonato de LEAGUE_OF_LEGENDS',
-        game: 'LEAGUE_OF_LEGENDS',
-        plataform: 1, // Exemplo de plataforma (PC)
-        maxTeams: 8,
-        teamsType: 2, // Exemplo de tipo de equipe (Equipe)
-        startDate: '2024-12-20T19:30:00Z',
-        endDate: '2024-12-23T23:00:00Z',
-        prize: 'R$ 2.000',
-        subscriptionType: 2, // Exemplo de tipo de inscrição (Paga)
-        status: 3, // Exemplo de status (Em andamento)
-        description: 'Campeonato competitivo de LoL.'
-      },
-      {
-        userId: '123',
-        name: 'Torneio de VALORANT #1',
-        game: 'VALORANT',
-        plataform: 1, // Exemplo de plataforma (PC)
-        maxTeams: 16,
-        teamsType: 1, // Exemplo de tipo de equipe (Solo)
-        startDate: '2024-11-15T18:00:00Z',
-        endDate: '2024-11-17T22:00:00Z',
-        prize: 'R$ 1.000',
-        subscriptionType: 1, // Exemplo de tipo de inscrição (Grátis)
-        status: 2, // Exemplo de status (Aberto)
-        description: 'Primeiro torneio de VALORANT da comunidade.'
-      },
-      {
-        userId: '456',
-        name: 'Campeonato de LEAGUE_OF_LEGENDS',
-        game: 'LEAGUE_OF_LEGENDS',
-        plataform: 1, // Exemplo de plataforma (PC)
-        maxTeams: 8,
-        teamsType: 2, // Exemplo de tipo de equipe (Equipe)
-        startDate: '2024-12-20T19:30:00Z',
-        endDate: '2024-12-23T23:00:00Z',
-        prize: 'R$ 2.000',
-        subscriptionType: 2, // Exemplo de tipo de inscrição (Paga)
-        status: 4, // Exemplo de status (Em andamento)
-        description: 'Campeonato competitivo de LoL.'
-      },
-      {
-        userId: '123',
-        name: 'Torneio de VALORANT #1',
-        game: 'VALORANT',
-        plataform: 1, // Exemplo de plataforma (PC)
-        maxTeams: 16,
-        teamsType: 1, // Exemplo de tipo de equipe (Solo)
-        startDate: '2024-11-15T18:00:00Z',
-        endDate: '2024-11-17T22:00:00Z',
-        prize: 'R$ 1.000',
-        subscriptionType: 1, // Exemplo de tipo de inscrição (Grátis)
-        status: 4, // Exemplo de status (Aberto)
-        description: 'Primeiro torneio de VALORANT da comunidade.'
-      },
-      {
-        userId: '456',
-        name: 'Campeonato de LEAGUE_OF_LEGENDS',
-        game: 'LEAGUE_OF_LEGENDS',
-        plataform: 1, // Exemplo de plataforma (PC)
-        maxTeams: 8,
-        teamsType: 2, // Exemplo de tipo de equipe (Equipe)
-        startDate: '2024-12-20T19:30:00Z',
-        endDate: '2024-12-23T23:00:00Z',
-        prize: 'R$ 2.000',
-        subscriptionType: 2, // Exemplo de tipo de inscrição (Paga)
-        status: 3, // Exemplo de status (Em andamento)
-        description: 'Campeonato competitivo de LoL.'
-      },
-      {
-        userId: '123',
-        name: 'Torneio de VALORANT #1',
-        game: 'VALORANT',
-        plataform: 1, // Exemplo de plataforma (PC)
-        maxTeams: 16,
-        teamsType: 1, // Exemplo de tipo de equipe (Solo)
-        startDate: '2024-11-15T18:00:00Z',
-        endDate: '2024-11-17T22:00:00Z',
-        prize: 'R$ 1.000',
-        subscriptionType: 1, // Exemplo de tipo de inscrição (Grátis)
-        status: 2, // Exemplo de status (Aberto)
-        description: 'Primeiro torneio de VALORANT da comunidade.'
-      },
-      {
-        userId: '456',
-        name: 'Campeonato de LEAGUE_OF_LEGENDS',
-        game: 'LEAGUE_OF_LEGENDS',
-        plataform: 1, // Exemplo de plataforma (PC)
-        maxTeams: 8,
-        teamsType: 2, // Exemplo de tipo de equipe (Equipe)
-        startDate: '2024-12-20T19:30:00Z',
-        endDate: '2024-12-23T23:00:00Z',
-        prize: 'R$ 2.000',
-        subscriptionType: 2, // Exemplo de tipo de inscrição (Paga)
-        status: 4, // Exemplo de status (Em andamento)
-        description: 'Campeonato competitivo de LoL.'
-      },
-    ];
+  ngOnInit() {
+    this.currentUserId = this.authService.getUserId(); // Obtendo o userId do AuthService
+    console.log('Usuário corrente: ' + this.currentUserId)
+    if (this.currentUserId) {
+      this.loadTournaments();
+    } else {
+      this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Usuário não autenticado' });
+    }
   }
 
-  showDetails(): void {
-    this.router.navigate(['tournaments/id']);
+  loadTournaments() {
+    if (!this.currentUserId) return;
+    this.loading = true;
+  
+    this.tournamentService.getAllTournaments().subscribe({
+      next: (response: any) => {
+        console.log('Respostas de todos os torneios:', response);
+        if (!response || !response.items || response.items.length === 0) {
+          this.tournaments = [];
+        } else {
+          this.tournaments = response.items.filter((tournament: any) => tournament.userId === this.currentUserId);
+          console.log('Torneios filtrados: ' + this.tournaments)
+        }
+        this.loading = false;
+      },
+      error: () => {
+        this.loading = false;
+        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Falha ao carregar seus torneios' });
+      }
+    });
   }
 
-  editTournament(): void {
-    this.router.navigate(['tournaments/update/' + 1]);
+  showDetails(id: string): void {
+    this.router.navigate(['tournaments/' + id]);
+  }
+
+  editTournament(id: string): void {
+    this.router.navigate(['tournaments/update/' + id]);
   }
 
   confirmDelete(event: Event, tournament: Tournament): void {

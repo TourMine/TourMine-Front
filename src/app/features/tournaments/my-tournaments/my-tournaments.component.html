@@ -5,39 +5,49 @@
         </div>
     </div>
 
+    <p-toast />
+    <p-confirmdialog />
+
     <div class="p-5">
         <div class="card">
-            <p-table [value]="tournaments" [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '50rem' }" [rowsPerPageOptions]="[5, 10, 25, 50, 100]">
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th style="width: 15%">Nome</th>
-                        <th style="width: 10%">Jogo</th>
-                        <th style="width: 10%">Plataforma</th>
-                        <th style="width: 10%">Data de Início</th>
-                        <th style="width: 10%">Status</th>
-                        <th style="width: 10%">Ações</th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-tournament>
-                    <tr>
-                        <td>{{ tournament.name }}</td>
-                        <td>{{ getGameLabel(tournament.game) }}</td>
-                        <td>{{ getPlataformLabel(tournament.plataform) }}</td>
-                        <td>{{ tournament.startDate | date: 'dd/MM/yyyy HH:mm' }}</td>
-                        <td>{{ getTournamentStatusLabel(tournament.status) }}</td>
-                        <td>
-                            <p-button icon="pi pi-search" [rounded]="true" [text]="true" severity="secondary" (click)="showDetails()" />
-                            @if (tournament.status != 3 || tournament.status != 4) {
-                                <p-button icon="pi pi-times-circle" [rounded]="true" [text]="true" severity="danger" [outlined]="true" (click)="confirmDelete($event, tournament); $event.stopPropagation();" />
-                                <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="warn" (click)="editTournament()" />
-                            }
-                        </td>
-                    </tr>
-                </ng-template>
-            </p-table>
+            @if (loading) {
+                <div class="card flex justify-center">
+                  <p-progress-spinner ariaLabel="loading" />
+                </div>
+              }
+            @if (!tournaments.length && !loading) { 
+                <h2 class="text-xl text-center mt-5 mb-5">Você ainda não criou nenhum torneio</h2>
+            } @else if (!loading) {
+                <p-table [value]="tournaments" [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '50rem' }" [rowsPerPageOptions]="[5, 10, 25, 50, 100]">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 15%">Nome</th>
+                            <th style="width: 10%">Jogo</th>
+                            <th style="width: 10%">Plataforma</th>
+                            <th style="width: 10%">Data de Início</th>
+                            <th style="width: 10%">Status</th>
+                            <th style="width: 10%">Ações</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-tournament>
+                        <tr>
+                            <td>{{ tournament.name }}</td>
+                            <td>{{ getGameLabel(tournament.game) }}</td>
+                            <td>{{ getPlataformLabel(tournament.plataform) }}</td>
+                            <td>{{ tournament.startDate | date: 'dd/MM/yyyy HH:mm' }}</td>
+                            <td>{{ getTournamentStatusLabel(tournament.status) }}</td>
+                            <td>
+                                <p-button icon="pi pi-search" [rounded]="true" [text]="true" severity="secondary" (click)="showDetails(tournament.id)" />
+                                @if (tournament.status != 3 || tournament.status != 4) {
+                                    <p-button icon="pi pi-times-circle" [rounded]="true" [text]="true" severity="danger" [outlined]="true" (click)="confirmDelete($event, tournament); $event.stopPropagation();" />
+                                    <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="warn" (cslick)="editTournament(tournament.id)" />
+                                }
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            }
         </div>
     </div>
 
-    <p-toast />
-    <p-confirmdialog />
 </app-card-main>
