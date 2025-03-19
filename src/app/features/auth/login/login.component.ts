@@ -57,7 +57,9 @@ export class LoginComponent {
   login(): void {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
-      this.authService.login(email, password); 
+      this.loading = true;
+      this.authService.login(email, password);
+      this.loading = false;
     }
   }
 

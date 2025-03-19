@@ -76,7 +76,6 @@ export class ListTournamentsComponent implements OnInit {
         this.tournaments = data.items;
         console.log(this.tournaments)
         this.filteredTournaments = [...this.tournaments]
-        console.log(this.filteredTournaments)
         this.updatePaginatedTournaments();
       },
       error: (error) => {

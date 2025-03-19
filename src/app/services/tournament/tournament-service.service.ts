@@ -23,9 +23,9 @@ export class TournamentService {
   
   // }
 
-  private readonly apiUrl = 'http://localhost:8080/tournament/v1/all';
-  private readonly apiUrl2 = 'http://localhost:8080/tournament/v1/create';
-  private readonly apiUrl3 = 'http://localhost:8080/tournament/v1';
+  private readonly apiUrl = 'https://localhost:7051/tournament/v1/all';
+  private readonly apiUrl2 = 'https://localhost:7051/tournament/v1/create';
+  private readonly apiUrl3 = 'https://localhost:7051/tournament/v1';
 
   constructor(private http: HttpClient) { }
 

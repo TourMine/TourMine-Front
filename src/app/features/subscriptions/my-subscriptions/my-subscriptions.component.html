@@ -1,29 +1,84 @@
 <app-card-main>
     <div class="flex justify-around items-center mb-2">
       <div>
-        <h1 class="uppercase text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold py-5 md:py-10">Minhas Inscrições</h1>
+        <h1 class="uppercase text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold py-5 md:py-10">
+          Minhas Inscrições
+        </h1>
       </div>
     </div>
 
     <div class="p-5">
         <p-toast />
-        <p-progressSpinner *ngIf="loading"></p-progressSpinner>
-        
-        <div *ngIf="!loading && subscriptions.length === 0" class="p-col-12">
-            <p class="text-center">Você ainda não está inscrito em nenhum torneio.</p>
+        <p-confirmdialog />
+
+        <div class="flex flex-wrap gap-4 justify-center items-center p-5 pb-10">
+
+            @for (sub of paginatedSubscriptions; track $index) {
+                <p-card [style]="{ width: '25rem', overflow: 'hidden' }" class="hover:shadow-lg transition-shadow duration-300">
+                    <ng-template #title>
+                        {{ sub.tournament?.name || 'Torneio desconhecido' }}
+                    </ng-template>
+                    <ng-template #subtitle>
+                        <p>
+                            <strong>Data e hora da Inscrição:</strong> 
+                            {{ sub.subscrpitionDate | date:'dd/MM/yyyy HH:mm' }}
+                        </p>
+                    </ng-template>
+                    <ng-template #content>
+                        <div class="flex flex-col justify-center gap-1 mt-5 mb-5">
+                            <p class="flex items-center gap-2">
+                                <strong>Jogo:</strong> 
+                                {{ getGameLabel(sub.tournament?.game) }}
+                            </p>
+                            <p class="flex items-center gap-2">
+                                <strong>Plataforma:</strong> 
+                                {{ getPlataformLabel(sub.tournament?.plataform) }}
+                            </p>
+                            <p class="flex items-center gap-2">
+                                <strong>Data de início:</strong> 
+                                {{ sub.tournament?.startDate | date:'dd/MM/yyyy HH:mm' }}
+                            </p>
+                            <p class="flex items-center gap-2">
+                                <strong>Status:</strong>
+                                <app-tournament-status-button [status]="sub.tournament?.status"></app-tournament-status-button>
+                            </p>
+                            <p class="flex items-center gap-2">
+                                <strong>Tipo de Inscrição:</strong>
+                                {{ getSubscriptionTypeLabel(sub.tournament?.subscriptionType) }}
+                            </p>
+                            <p class="flex items-center gap-2">
+                                <strong>Status:</strong>
+                                <span [ngClass]="sub.status === 1 ? 'text-green-500' : 'text-yellow-500'">
+                                    {{ sub.status === 1 ? 'Confirmado' : 'Pendente' }}
+                                </span>
+                            </p>
+                        </div>
+                    </ng-template>
+                    <ng-template #footer>
+                        <div class="flex justify-between">
+                            @if (sub.tournament?.status == 1 || sub.tournament?.status == 2) {
+                                <div class="flex justify-end items-start">
+                                    <p-button (click)="confirmCancellation($event, sub); $event.stopPropagation();" label="Cancelar" severity="danger" [outlined]="true" />
+                                </div>
+                            }
+                            <a [routerLink]="'/tournaments/' + sub.tournament?.id" class="flex justify-end items-center no-underline cursor-pointer" >
+                                <span class="text-blue-500 font-semibold">Ver detalhes</span>
+                                <i class="pi pi-arrow-right ml-2 text-blue-500"></i>
+                            </a>
+                        </div>
+                    </ng-template>
+                </p-card>
+            }
+            @if (!subscriptions.length && !loading) { 
+                <h2 class="text-xl text-center">Você ainda não está inscrito em nenhum torneio.</h2>
+            }
+            @if (loading) {
+                <div class="card flex justify-center">
+                <p-progress-spinner ariaLabel="loading" />
+                </div>
+            }
         </div>
 
-        <div *ngFor="let sub of subscriptions" class="flex justify-start items-center p-col-12 p-md-6 p-lg-4">
-            <p-card>
-                <ng-template pTemplate="title">
-                {{ sub.tournament?.name || 'Torneio desconhecido' }}
-                </ng-template>
-                <ng-template pTemplate="content">
-                <p><strong>Data de Inscrição:</strong> {{ sub.subscrpitionDate | date:'dd/MM/yyyy HH:mm' }}</p>
-                <p><strong>Status:</strong> {{ sub.status === 1 ? 'Confirmado' : 'Pendente' }}</p>
-                </ng-template>
-            </p-card>
-        </div>
+        <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="totalRecords" [rowsPerPageOptions]="[5, 10, 25, 50, 100]" />
     </div>
 </app-card-main>
-  

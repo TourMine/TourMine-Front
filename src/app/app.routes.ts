@@ -20,13 +20,13 @@ export const routes: Routes = [
         path: '',
         component: HomeComponent,
         children: [
-            { path: 'profile', component: ProfilePageComponent },
-            { path: 'tournaments/list', component: ListTournamentsComponent },
-            { path: 'tournaments/create', component: CreateTournamentComponent },
-            { path: 'tournaments/id', component: TournamentDetailComponent },
-            { path: 'tournaments/update/:id', component: UpdateTournamentComponent },
-            { path: 'my-tournaments', component: MyTournamentsComponent },
-            { path: 'my-subscriptions', component: MySubscriptionsComponent}
+            { path: 'profile', component: ProfilePageComponent, canActivate: [AuthGuard] },
+            { path: 'tournaments/list', component: ListTournamentsComponent, canActivate: [AuthGuard] },
+            { path: 'tournaments/create', component: CreateTournamentComponent, canActivate: [AuthGuard] },
+            { path: 'tournaments/:id', component: TournamentDetailComponent, canActivate: [AuthGuard] },
+            { path: 'tournaments/update/:id', component: UpdateTournamentComponent, canActivate: [AuthGuard] },
+            { path: 'my-tournaments', component: MyTournamentsComponent, canActivate: [AuthGuard] },
+            { path: 'my-subscriptions', component: MySubscriptionsComponent, canActivate: [AuthGuard] }
         ]
     },
 
