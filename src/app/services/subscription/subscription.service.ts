@@ -8,8 +8,8 @@ import { API_ENDPOINTS } from '../../core/api-endpoints';
 })
 export class SubscriptionService {
 
-  private readonly apiUrl = 'http://localhost:8080/subscription/v1/create';
-  private readonly apiUrlId = 'http://localhost:8080/subscription/v1/{UserId}';
+  private readonly apiUrl = 'https://localhost:7051/subscription/v1/create';
+  private readonly apiUrlId = 'https://localhost:7051/subscription/v1/{UserId}';
 
   constructor(private http: HttpClient) { }
 
@@ -19,7 +19,6 @@ export class SubscriptionService {
 
   getAllSubscriptionsByUserId(userId: string): Observable<any> {
     return this.http.get<any>(this.apiUrlId.replace('{UserId}', userId));
-
   }
 
   // constructor(private http: HttpClient) { }

@@ -7,14 +7,13 @@
 
     <div class="p-5">
         <div class="card">
-            <p-table [value]="tournaments" [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '50rem' }" [rowsPerPageOptions]="[5, 10, 20]">
+            <p-table [value]="tournaments" [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '50rem' }" [rowsPerPageOptions]="[5, 10, 25, 50, 100]">
                 <ng-template pTemplate="header">
                     <tr>
                         <th style="width: 15%">Nome</th>
                         <th style="width: 10%">Jogo</th>
                         <th style="width: 10%">Plataforma</th>
                         <th style="width: 10%">Data de Início</th>
-                        <th style="width: 10%">Data de Término</th>
                         <th style="width: 10%">Status</th>
                         <th style="width: 10%">Ações</th>
                     </tr>
@@ -22,15 +21,16 @@
                 <ng-template pTemplate="body" let-tournament>
                     <tr>
                         <td>{{ tournament.name }}</td>
-                        <td>{{ tournament.game }}</td>
-                        <td>{{ tournament.plataform }}</td>
+                        <td>{{ getGameLabel(tournament.game) }}</td>
+                        <td>{{ getPlataformLabel(tournament.plataform) }}</td>
                         <td>{{ tournament.startDate | date: 'dd/MM/yyyy HH:mm' }}</td>
-                        <td>{{ tournament.endDate | date: 'dd/MM/yyyy HH:mm' }}</td>
-                        <td>{{ tournament.status }}</td>
+                        <td>{{ getTournamentStatusLabel(tournament.status) }}</td>
                         <td>
                             <p-button icon="pi pi-search" [rounded]="true" [text]="true" severity="secondary" (click)="showDetails()" />
-                            <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="warn" (click)="editTournament()" />
-                            <p-button icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" [outlined]="true" (click)="confirmDelete($event, tournament); $event.stopPropagation();" />
+                            @if (tournament.status != 3 || tournament.status != 4) {
+                                <p-button icon="pi pi-times-circle" [rounded]="true" [text]="true" severity="danger" [outlined]="true" (click)="confirmDelete($event, tournament); $event.stopPropagation();" />
+                                <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="warn" (click)="editTournament()" />
+                            }
                         </td>
                     </tr>
                 </ng-template>

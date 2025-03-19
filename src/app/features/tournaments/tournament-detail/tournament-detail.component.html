@@ -43,8 +43,8 @@
                         <div class="m-0">
                             <p class="flex flex-col gap-2">
                                 <span class="text-sm text-gray-500">Jogo & Plataforma</span>
-                                <span>VALORANT</span>
-                                <span class="text-sm">PC</span>
+                                <span>{{ getGameLabel(tournament.game) }}</span>
+                                <span class="text-sm">{{ getPlataformLabel(tournament.plataform) }}</span>
                             </p>
                             <p-divider />
                             <p class="flex flex-col gap-2">
@@ -73,17 +73,12 @@
                             <p-divider />
                             <p class="flex flex-col gap-2">
                                 <span class="text-sm text-gray-500">Tipo Inscrição</span>
-                                <span>Grátis</span>
+                                <span>{{ getSubscriptionTypeLabel(tournament.subscriptionType) }}</span>
                             </p>
                         </div>
                     </p-tabpanel>
                     <p-tabpanel value="1">
                         <div class="m-0">
-                            <p class="flex flex-col gap-2">
-                                <span class="text-sm text-gray-500">Formato</span>
-                                <span>5v5</span>
-                            </p>
-                            <p-divider />
                             <p class="flex flex-col gap-2">
                                 <span class="text-sm text-gray-500">Tipo de Equipe</span>
                                 <span>SOLO</span>
