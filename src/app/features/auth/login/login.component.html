@@ -3,6 +3,8 @@
     <div class="w-full lg:w-2/5 flex justify-center items-center">
       <form [formGroup]="loginForm" (ngSubmit)="login()"  class="flex flex-col gap-5 p-8 w-3/4 max-w-md shadow-lg rounded-lg">
         <h2 class="text-3xl font-medium text-center">Login</h2>
+
+        <p-toast />
   
         <div class="flex flex-col gap-2">
           <label for="email">Email</label>

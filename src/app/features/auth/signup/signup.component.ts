@@ -12,6 +12,9 @@ import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { User } from '../../../models/users/users';
 import { UsersService } from '../../../services/users/users.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+
 
 @Component({
   selector: 'app-signup',
@@ -26,10 +29,12 @@ import { UsersService } from '../../../services/users/users.service';
     Carousel,
     AvatarModule,
     AvatarGroupModule,
-    RadioButton
+    RadioButton,
+    ToastModule
   ],
   templateUrl: './signup.component.html',
-  styleUrl: './signup.component.scss'
+  styleUrl: './signup.component.scss',
+  providers: [MessageService]
 })
 export class SignupComponent {
   signupForm: FormGroup;
@@ -56,7 +61,7 @@ export class SignupComponent {
     "assets/img/csgo2.jpg"
   ];
 
-  constructor(private fb: FormBuilder, private UsersService: UsersService, private router: Router) {
+  constructor(private fb: FormBuilder, private UsersService: UsersService, private router: Router, private messageService: MessageService) {
     this.signupForm = this.fb.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
@@ -88,6 +93,7 @@ export class SignupComponent {
           next: (response) => {
             this.signupForm.reset();
             this.successMessage = 'Usuario criado com sucesso!';
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Usuário criado com sucesso!' });
   
             setTimeout(() => {
               this.successMessage = '';
