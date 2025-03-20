@@ -39,6 +39,9 @@ export class MyTournamentsComponent implements OnInit {
   selectedTournament: Tournament | null = null;
 
   loading: boolean = false;
+  subscriptions: any[] = []; // Inscrições do torneio
+  selectedTournamentId: string | null = null; // ID do torneio selecionado
+  selectedTournamentName: string = '';
 
   getGameLabel(game: string): string {
     return GAME_LABELS[game as EGames] || 'Desconhecido';
@@ -98,6 +101,40 @@ export class MyTournamentsComponent implements OnInit {
   showDetails(id: string): void {
     this.router.navigate(['tournaments/' + id]);
   }
+
+
+  showSubscriptions(tournamentId: string): void {
+    console.log(`Visualizando inscrições do torneio com ID: ${tournamentId}`);
+
+    this.selectedTournamentId = tournamentId; // Armazenar o ID do torneio selecionado
+
+    this.tournamentService.getTournamentSubscriptions(tournamentId).subscribe({
+      next: (response: any) => {
+        console.log('Inscrições recebidas:', response.items);
+        this.subscriptions = response.items; // Atualiza as inscrições
+        
+        this.selectedTournamentId = tournamentId;
+        this.getTournamentName(tournamentId); 
+      },
+      error: (error) => {
+        console.error('Erro ao buscar inscrições:', error);
+        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Falha ao carregar inscrições do torneio' });
+      }
+    });
+  }
+
+  getTournamentName(tournamentId: string): void {
+    this.tournamentService.getTournamentById(tournamentId).subscribe({
+      next: (tournament: any) => {
+        this.selectedTournamentName = tournament.name;  // Atribuindo o nome do torneio
+        console.log('Nome do Torneio:', this.selectedTournamentName);  // Verificação no console
+      },
+      error: (error) => {
+        console.error('Erro ao buscar o nome do torneio:', error);
+      }
+    });
+}
+  
 
   editTournament(id: string): void {
     this.router.navigate(['tournaments/update/' + id]);

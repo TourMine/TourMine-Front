@@ -26,6 +26,7 @@ export class TournamentService {
   private readonly apiUrl = 'https://localhost:7051/tournament/v1/all';
   private readonly apiUrl2 = 'https://localhost:7051/tournament/v1/create';
   private readonly apiUrl3 = 'https://localhost:7051/tournament/v1';
+  private readonly apiUrl4 = 'https://localhost:7051/subscription/v1/get-by-tournamentId/{tournamentId}';
 
   constructor(private http: HttpClient) { }
 
@@ -43,6 +44,10 @@ export class TournamentService {
 
   updateTournament(id: string, tournamentData: any): Observable<any> {
     return this.http.put<any>(API_ENDPOINTS.updateTournament(id), tournamentData);
+  }
+
+  getTournamentSubscriptions(tournamentId: string): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl4.replace('{tournamentId}', tournamentId));
   }
 
 }

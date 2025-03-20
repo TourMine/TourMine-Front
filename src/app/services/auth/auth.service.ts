@@ -85,7 +85,7 @@ export class AuthService {
     if (!token) return null;
   
     const payload = this.decodeJwt(token);
-    return payload?.nameid || null; // Supondo que o token contenha um campo 'userId'
+    return payload?.userId || null; // Supondo que o token contenha um campo 'userId'
   }
 
   public getUserEmail(): string | null {
