@@ -4,7 +4,7 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 
 ## Integrantes
 - Alic Victor (20221370027)
-- Caio Miranda ()
+- Caio Miranda (20221370046)
 - Clodoaldo Negreiros ()
 - Gustavo Nascimento (20212370035)
 
