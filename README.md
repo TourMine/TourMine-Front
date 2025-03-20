@@ -2,6 +2,18 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.7.
 
+## Integrantes
+- Alic Victor (20221370027)
+- Caio Miranda ()
+- Clodoaldo Negreiros ()
+- Gustavo Nascimento (20212370035)
+
+## Módulos Back End
+Tourmine-API (https://github.com/TourMine/Tourmine-API)
+Tourmine-Tournament-Service (https://github.com/TourMine/Tourmine-Tournament-Service)
+Tourmine-Users-Service (https://github.com/TourMine/Tourmine-Users-Service)
+Tourmine-NotificationService (https://github.com/TourMine/Tourmine-NotificationService)
+
 ## Development server
 
 To start a local development server, run:
