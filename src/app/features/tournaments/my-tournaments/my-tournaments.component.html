@@ -38,6 +38,7 @@
                             <td>{{ getTournamentStatusLabel(tournament.status) }}</td>
                             <td>
                                 <p-button icon="pi pi-search" [rounded]="true" [text]="true" severity="secondary" (click)="showDetails(tournament.id)" />
+                                <p-button icon="pi pi-users" [rounded]="true" [text]="true" severity="info" (click)="showSubscriptions(tournament.id)" />
                                 @if (tournament.status != 3 || tournament.status != 4) {
                                     <p-button icon="pi pi-times-circle" [rounded]="true" [text]="true" severity="danger" [outlined]="true" (click)="confirmDelete($event, tournament); $event.stopPropagation();" />
                                     <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="warn" (cslick)="editTournament(tournament.id)" />
@@ -47,7 +48,32 @@
                     </ng-template>
                 </p-table>
             }
+            
         </div>
     </div>
+<div *ngIf="subscriptions && subscriptions.length > 0 && selectedTournamentId">
+    <h3 class="text-2xl mt-4">Detalhes das Inscrições para o Torneio {{ selectedTournamentName }}</h3>
+    <table class="table-auto w-full mt-4">
+        <thead>
+            <tr>
+                <th class="px-4 py-2">User ID</th>
+                <th class="px-4 py-2">Data de Inscrição</th>
+                <th class="px-4 py-2">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let subscription of subscriptions">
+                <td class="border px-4 py-2">{{ subscription.userId }}</td>
+                <td class="border px-4 py-2">{{ subscription.subscrpitionDate | date: 'dd/MM/yyyy HH:mm' }}</td>
+                <td class="border px-4 py-2">{{ subscription.status }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
+<div *ngIf="subscriptions && subscriptions.length === 0 && selectedTournamentId">
+    <p>Nenhuma inscrição encontrada para este torneio.</p>
+</div>
+
+    
 </app-card-main>
