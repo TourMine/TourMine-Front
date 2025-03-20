@@ -6,9 +6,10 @@
     </div>
 
     <div class="text-center mb-5">
-        <p class="text-lg font-semibold">Email: {{ userEmail || 'Não disponível' }}</p>
-        <p class="text-lg font-semibold">Role: {{ userRole || 'Não disponível' }}</p>
+        <p class="text-lg font-semibold">Papel: {{ userRole || 'Não disponível' }}</p>
     </div>
+
+    <p-toast />
   
     <div class="p-5 flex justify-center">
         <form [formGroup]="editProfileForm" (ngSubmit)="editProfile()" class="flex flex-col gap-5 py-5 mb-5 w-3/4 max-w-md shadow-lg rounded-lg">
@@ -17,8 +18,8 @@
             </div>
       
             <div class="flex flex-col gap-2">
-                <label for="Name">Name</label>
-                <input pInputText formControlName="Name" type="Name" id="Name" name="Name" />
+                <label for="name">Name</label>
+                <input pInputText formControlName="name" type="text" id="name" name="name" />
                 @if (isFieldInvalid("Name")) {
                     <small class="text-red-500">
                         O Name não pode ficar vazio.
@@ -45,12 +46,12 @@
                     </small>
                 }
             </div>
-      
+
             <div>
               <p-button 
                 label="Salvar"
                 type="submit"
-                [disabled]="editProfileForm.invalid"
+                [disabled]="!formChanged || editProfileForm.invalid"
               />
             </div>
           </form>

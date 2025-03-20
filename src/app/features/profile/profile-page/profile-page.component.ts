@@ -7,6 +7,8 @@ import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { AuthService } from '../../../services/auth/auth.service';
 import { UsersService } from '../../../services/users/users.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-profile-page',
@@ -17,10 +19,12 @@ import { UsersService } from '../../../services/users/users.service';
     FormsModule,
     ButtonModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    ToastModule
   ],
   templateUrl: './profile-page.component.html',
-  styleUrl: './profile-page.component.scss'
+  styleUrl: './profile-page.component.scss',
+  providers: [MessageService]
 })
 export class ProfilePageComponent implements OnInit {
   editProfileForm!: FormGroup;
@@ -29,7 +33,12 @@ export class ProfilePageComponent implements OnInit {
   userEmail!: string | null;
   userRole!: string | null;
 
-  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService, private usersService: UsersService) {}
+  constructor(
+    private fb: FormBuilder, 
+    private router: Router, 
+    private authService: AuthService, 
+    private usersService: UsersService,
+    private messageService: MessageService) {}
 
   ngOnInit(): void {
     this.userId = this.authService.getUserId();
@@ -42,13 +51,33 @@ export class ProfilePageComponent implements OnInit {
 
     // Inicializa o formulário
     this.editProfileForm = this.fb.group({
-      Name: ['', [Validators.required]],
+      name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.minLength(6)]], // Senha não obrigatória na edição
     });
 
+    if (this.userId) {
+      this.loadUserData();
+    }
+
     this.editProfileForm.valueChanges.subscribe(() => {
       this.formChanged = this.editProfileForm.dirty;
+    });
+
+  }
+
+  loadUserData(): void {
+    this.usersService.getUserById(this.userId!).subscribe({
+      next: (user) => {
+        console.log('Dados do usuário carregados:', user);
+        this.editProfileForm.patchValue({
+          name: user.name,
+          email: user.email,
+        });
+      },
+      error: (err) => {
+        console.error('Erro ao carregar dados do usuário:', err);
+      }
     });
   }
 
@@ -61,19 +90,21 @@ export class ProfilePageComponent implements OnInit {
   editProfile(): void {
     if (this.editProfileForm.valid && this.userId) {
       const updateData = this.editProfileForm.value;
-
-      // Removendo a senha se o campo estiver vazio (não alterar a senha)
+  
+      // Se o usuário não digitou nova senha, remove o campo password
       if (!updateData.password) {
         delete updateData.password;
       }
-
+  
       this.usersService.updateUser(this.userId, updateData)
         .subscribe({
           next: (response) => {
             console.log('Perfil atualizado com sucesso:', response);
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Perfil atualizado com sucesso!' });
             this.router.navigate(['/tournaments/list']);
           },
           error: (err) => {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Erro ao atualizar perfil.' });
             console.error('Erro ao atualizar perfil:', err);
           }
         });

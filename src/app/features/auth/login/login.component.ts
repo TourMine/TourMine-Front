@@ -9,6 +9,8 @@ import { CommonModule } from '@angular/common';
 import { ImageModule } from 'primeng/image';
 import { Carousel } from 'primeng/carousel';
 import { AuthService } from '../../../services/auth/auth.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-login',
@@ -21,10 +23,12 @@ import { AuthService } from '../../../services/auth/auth.service';
     ReactiveFormsModule,
     ImageModule,
     Carousel,
-    RouterModule
+    RouterModule,
+    ToastModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
+  providers: [MessageService]
 })
 export class LoginComponent {
   loginForm: FormGroup;
@@ -47,7 +51,7 @@ export class LoginComponent {
     { breakpoint: '576px', numVisible: 1, numScroll: 1 }
   ];
 
-  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService, private messageService: MessageService) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
